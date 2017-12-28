@@ -1,7 +1,11 @@
+CREATE DATABASE serviceexchange;
+
+USE serviceexchange;
+
 CREATE TABLE User (
   username     VARCHAR(30),
   password     VARCHAR(30),
-  usertype     VARCHAR(10) NOT NULL  DEFAULT 'user',
+  usertype     VARCHAR(10) NOT NULL  DEFAULT 'ROLE_user',
   nickname     VARCHAR(30) UNIQUE,
   firstname    VARCHAR(20) NOT NULL,
   lastname     VARCHAR(20) NOT NULL,
@@ -15,10 +19,10 @@ CREATE TABLE User (
   virtualMoney DOUBLE      NOT NULL  DEFAULT 100,
   CONSTRAINT user_pk PRIMARY KEY (username),
   CONSTRAINT Ver_check CHECK (verified = 'Y' OR verified = 'N'),
-  CONSTRAINT type_const CHECK (usertype = 'user' OR usertype = 'admin')
+  CONSTRAINT type_const CHECK (usertype = 'ROLE_user' OR usertype = 'ROLE_admin')
 );
 
-insert into User VALUES ('xz906@uowmail.edu.au','test111','admin','Rainy','Xinyu','Zhang','Y','0476622798','Chinese','Chinese','1992-07-10','',5,'100');
+insert into User VALUES ('xz906@uowmail.edu.au','test111','ROLE_admin','Rainy','Xinyu','Zhang','Y','0476622798','Chinese','Chinese','1992-07-10','',5,'100');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
          VALUES ('jz491@uowmail.edu.au','test111','Frank','Jianbo','Zhao','Y','Chinese','Chinese');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
@@ -34,7 +38,7 @@ insert into User(username, password, nickname, firstname, lastname,verified,Nati
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
          VALUES ('saan977@uowmail.edu.au','test111','Ali','unknown','unknown','Y','unknown','unknown');
 insert into User(username, password,usertype,nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('hkn193@uowmail.edu.au','test111','admin','Kim','Kim','unknown','Y','Vietnam','Vietnam');
+         VALUES ('hkn193@uowmail.edu.au','test111','ROLE_admin','Kim','Kim','unknown','Y','Vietnam','Vietnam');
 
 
 CREATE TABLE Service (
@@ -83,12 +87,11 @@ insert into SearchRecord(recordID, username, searchInfo) VALUES (0,'jr239@uowmai
 insert into SearchRecord(recordID, username, searchInfo) VALUES (0,'adk829@uowmail.edu.au','spring framework');
 insert into SearchRecord(recordID, username, searchInfo) VALUES (0,'hkn193@uowmail.edu.au','AI information');
 
-
 CREATE TABLE Favourites (
   username  VARCHAR(30) NOT NULL,
   serviceID INT         NOT NULL,
   CONSTRAINT favourites_pk PRIMARY KEY (username, serviceID),
-  CONSTRAINT favourites_fk1 FOREIGN KEY (username) REFERENCES user(username),
+  CONSTRAINT favourites_fk1 FOREIGN KEY (username) REFERENCES User(username),
   CONSTRAINT favourites_fk2 FOREIGN KEY (serviceID) REFERENCES Service(serviceID)
 );
 
