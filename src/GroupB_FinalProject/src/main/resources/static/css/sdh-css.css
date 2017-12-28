@@ -1,0 +1,108 @@
+*
+{
+    margin:0; padding:0;
+}
+img
+{
+    display:block;
+    padding:0; margin:0;
+}
+  .wap
+    {
+        width:209px;
+    }
+    .lfbox
+    {
+        width:209px;
+        height:424px;
+        float:left;
+        background:url(../images/navi_bg.png) no-repeat left top;
+        padding-top:5px;
+    }
+    .lfbox .lfbox_navi
+    {
+        width:209px;
+        height: 35px;
+        line-height: 35px;
+        font-weight: normal;
+        color: #fff;
+        position: relative;
+        z-index:2;
+        float: left;
+        text-align:left;
+		border:none;
+    }
+    .lfbox h3{ 
+        width:209px;
+        height: 35px; float:left;  background:url(../images/hov11.png) no-repeat left top; 
+        color:#fff; overflow:hidden;}
+    .lfbox h3:hover{ 
+        width:209px;
+        height: 35px; float:left;  background:url(../images/hov12.jpg) no-repeat left top; overflow:hidden;}
+.lfbox h3 a{width:160px; height:35px;
+            float:left; padding-left:10px; font-family:宋体; font-size:12px;
+            color:#fff; line-height:35px; text-align:left; font-weight:normal;
+}
+    .lfbox h3 a:hover
+    {
+        font-family:宋体; font-size:12px;
+            color:#fff; line-height:35px; text-align:left; font-weight:normal;
+    }
+
+
+
+    .lfbox .two_navi
+    {
+        float: left;
+        display: none;
+        width:334px;
+        height:auto;     
+        position: absolute !important;
+        left:209px;
+        top:0;
+        cursor: auto;
+        z-index:-9999;
+    }
+    .lfbox .two_navi_show
+    {
+        position: inherit;
+        width:auto;
+		height:auto;
+		border:none;
+        text-align: left;
+        overflow: hidden;
+        margin-top:-10px;
+        padding-bottom: 10px;
+    }
+    
+    .lfbox .active_morse div
+    {
+        display: block !important;
+    }
+    .lfbox .active_morse
+    {
+        z-index: 99;
+        cursor: pointer;
+        color: #fff !important;
+    }
+    .lfbox .active_morse a
+    {
+        color: #fff;
+    }
+
+.lis1{width:334px;
+       height:434px;
+       background:url(../images/navi_bg2.png) no-repeat left top;
+ float:left; font-family:宋体; text-decoration:none; font-style:normal; border:none; overflow:hidden;}
+
+
+.lis1 b{width:324px; height:30px; float:left; margin-left:6px; font-family:宋体; text-decoration:none; font-size:14px; color:#c10000; line-height:30px; font-weight:bold; text-align:center; border-bottom:1px solid #333;  overflow:hidden;}
+
+
+.lis1 dl{width:320px; float:left;  margin-left:4px; font-family:宋体; text-decoration:none; font-size:12px; color:#333333; font-style:normal; line-height:18px; overflow:hidden;}
+
+.lis1 dl a{height:24px;  background:url(../images/c_bg2.jpg) no-repeat  right 50%;  font-family:宋体; text-decoration:none; font-size:12px; color:#333333; line-height:24px;  margin:5px 0; padding:0 5px;  overflow:hidden;}
+
+
+.hover{border-top:1px solid #c30; border-bottom:1px solid #c30; border-right:0;width:90px; background:#fff9ef;}
+

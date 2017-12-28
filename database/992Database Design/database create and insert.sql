@@ -4,7 +4,7 @@ USE serviceexchange;
 
 CREATE TABLE User (
   username     VARCHAR(30),
-  password     VARCHAR(30),
+  password     VARCHAR(255),
   usertype     VARCHAR(10) NOT NULL  DEFAULT 'ROLE_user',
   nickname     VARCHAR(30) UNIQUE,
   firstname    VARCHAR(20) NOT NULL,
@@ -22,23 +22,24 @@ CREATE TABLE User (
   CONSTRAINT type_const CHECK (usertype = 'ROLE_user' OR usertype = 'ROLE_admin')
 );
 
-insert into User VALUES ('xz906@uowmail.edu.au','test111','ROLE_admin','Rainy','Xinyu','Zhang','Y','0476622798','Chinese','Chinese','1992-07-10','',5,'100');
+-- default password is test111
+insert into User VALUES ('xz906@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','ROLE_admin','Rainy','Xinyu','Zhang','Y','0476622798','Chinese','Chinese','1992-07-10','',5,'100');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('jz491@uowmail.edu.au','test111','Frank','Jianbo','Zhao','Y','Chinese','Chinese');
+         VALUES ('jz491@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Frank','Jianbo','Zhao','Y','Chinese','Chinese');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('jr239@uowmail.edu.au','test111','End','Junxin','Ren','Y','Chinese','Chinese');
+         VALUES ('jr239@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','End','Junxin','Ren','Y','Chinese','Chinese');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('qc851@uowmail.edu.au','test111','Tim','Qiusheng','Chu','Y','Chinese','Chinese');
+         VALUES ('qc851@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Tim','Qiusheng','Chu','Y','Chinese','Chinese');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('adk829@uowmail.edu.au','test111','Asnwin','Asnwin','unknown','Y','Indian','Indian');
+         VALUES ('adk829@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Asnwin','Asnwin','unknown','Y','Indian','Indian');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('svm636@uowmail.edu.au','test111','Sameer','Sameer','unknown','Y','Saudi Arabia','Saudi Arabia');
+         VALUES ('svm636@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Sameer','Sameer','unknown','Y','Saudi Arabia','Saudi Arabia');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('wx432@uowmail.edu.au','test111','Owen','Wenqiang','Xun','Y','Singapore','Singapore');
+         VALUES ('wx432@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Owen','Wenqiang','Xun','Y','Singapore','Singapore');
 insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('saan977@uowmail.edu.au','test111','Ali','unknown','unknown','Y','unknown','unknown');
+         VALUES ('saan977@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Ali','unknown','unknown','Y','unknown','unknown');
 insert into User(username, password,usertype,nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('hkn193@uowmail.edu.au','test111','ROLE_admin','Kim','Kim','unknown','Y','Vietnam','Vietnam');
+         VALUES ('hkn193@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','ROLE_admin','Kim','Kim','unknown','Y','Vietnam','Vietnam');
 
 
 CREATE TABLE Service (
