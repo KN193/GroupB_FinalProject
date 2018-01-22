@@ -2,6 +2,7 @@ package uow.finalproject.webapp.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class WebController {
@@ -33,5 +34,15 @@ public class WebController {
 	@RequestMapping(value= {"/member_person"})
 	public String member_person() {
 		return "member_person";
+	}
+	
+	@RequestMapping(value= {"/member_center"})
+	public String member_center() {
+		return "member_center";
+	}
+	
+	@RequestMapping(value= {"/member_index"})
+	public String member_index() {
+		return "member_index";
 	}
 }

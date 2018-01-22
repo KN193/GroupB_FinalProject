@@ -38,7 +38,7 @@
                 <img src="images/top1.jpg" width="1920" height="70" />
             </div>
         </div>
-        <form th:action='@{usr/register}' method="post">
+        <form th:action='@{/register_firstStep}' method="post">
         <div id="enBlack">
             <div class="loBox">
                 <div class="lBox1">
@@ -48,6 +48,7 @@
                                 <th><font>email</font></th>
                                 <td>
                                     <input id="email" type="text" name="email" value="wollongong university email" onfocus="this.value=''" onblur="if(this.value==''){this.value='wollongong university email'}" class="tab1" /></td>
+                                    <td><input id="register" type="hidden" name="register" value="true" /></td>
                             </tr>
                            
                         </table>

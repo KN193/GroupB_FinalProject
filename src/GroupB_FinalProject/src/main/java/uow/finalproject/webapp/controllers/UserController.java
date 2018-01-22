@@ -1,6 +1,12 @@
 package uow.finalproject.webapp.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import uow.finalproject.webapp.dao.UserDAO;
 import uow.finalproject.webapp.entity.User;
+import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.entityType.Suburb;
 import uow.finalproject.webapp.utility.PasswordGenerator;
 
@@ -23,7 +30,7 @@ public class UserController {
 	@Autowired
 	PasswordGenerator passwordGenerator;
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@RequestMapping(value="/member_index", method=RequestMethod.GET)
     public ModelAndView loginUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		ModelAndView modelAndView = new ModelAndView();
@@ -32,14 +39,60 @@ public class UserController {
 		return modelAndView;
     }
 	
+	@RequestMapping(value="/member_person", method=RequestMethod.GET)
+    public ModelAndView member_person() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		ModelAndView modelAndView = new ModelAndView();
+		if (auth.getName().equals("anonymousUser")) {
+			modelAndView.setViewName("index");
+			return modelAndView;
+		}
+		
+		List<Nationality> nationsSet = new ArrayList<Nationality>(EnumSet.allOf(Nationality.class));
+		
+		String loggedUser = auth.getName();
+		User usr = userDAO.findUser(loggedUser);
+		
+		modelAndView.addObject("userName", loggedUser);
+		modelAndView.addObject("name", usr.getFirstName());
+		modelAndView.addObject("nation", usr.getNationality());
+		modelAndView.addObject("nationsSet", nationsSet);
+		modelAndView.setViewName("member_person");
+		
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/register_firstStep", method=RequestMethod.POST)
+    public ModelAndView register_firstStep(@RequestParam(value="email", required=true) String email,@RequestParam(value="register", required=true) boolean register) {
+		ModelAndView modelAndView = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!register && auth.getName().equals("anonymousUser")) {
+			modelAndView.setViewName("index");
+		} else {
+			List<Nationality> nationsSet = new ArrayList<Nationality>(EnumSet.allOf(Nationality.class));
+			modelAndView.addObject("userName", email);
+			modelAndView.addObject("nation", Nationality.Australian);
+			modelAndView.addObject("nationsSet", nationsSet);
+			modelAndView.setViewName("member_person");
+		}
+		
+		return modelAndView;
+    }
+
     @RequestMapping(value="/registerNewUser", method=RequestMethod.POST)
-    public String registerNewUser(@RequestParam(value="email", required=true) String email) {
+    public String registerNewUser(@RequestParam(value="userName", required=true) String userName
+    								,@RequestParam(value="name", required=true) String name
+    								,@RequestParam(value="zipCode", required=false) int zipCode
+    								,@RequestParam(value="suburb", required=false) Suburb suburb
+    								,@RequestParam(value="nation", required=false) Nationality nation
+    								,@RequestParam(value="DOB", required=false ) @DateTimeFormat(pattern = "yyyy-mm-dd") Date DOB) {
     		String generatedPassword = passwordGenerator.generateNewPassword();
     		System.out.println(generatedPassword);
     		
-        User registeredUser = new User("nickname","fname","lname",email, generatedPassword, 111, Suburb.NSW, "link");
+        User registeredUser = new User(name,name,name,userName, generatedPassword, zipCode, suburb, nation);
+        registeredUser.setDOB(DOB);
     		if (userDAO.registerNewUser(registeredUser)) {
-    			return "member_person";
+    			return "index";
     		} 
     		
     		return "fail";

@@ -26,13 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/","/recommendation.html","/index.html","/index_login.html", "/register.html",
-											"/usr/register"
+											"/register_firstStep" ,"/member_person", "/registerNewUser"
 							).permitAll()
-							.antMatchers("/*").hasRole("user").anyRequest().authenticated().and().formLogin().loginPage("/index_login.html").permitAll()
-							.and().logout()
+							.antMatchers("/*").hasRole("user").anyRequest().authenticated().and().formLogin().loginPage("/index_login").permitAll()
+							.defaultSuccessUrl("/member_index").and().logout()
 							.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 							.logoutSuccessUrl("/");
-		//http.exceptionHandling()
+//		http.exceptionHandling().accessDeniedPage("/403");
 	}
 
 }

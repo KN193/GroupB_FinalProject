@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -52,7 +52,7 @@
                         <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
                                 <li><a href="register.html">register</a></li>
                                  <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
@@ -368,7 +368,7 @@
                                      <li><a href="member_discount_offer.html">discount offer</a></li>
                                     <li><a href="member_address.html">delivery address</a></li>
                                     <li><a href="member_collect.html">my favorite</a></li>
-                                    <li><a href="member_credit_transfer.html">credit & credit transfer</a></li>
+                                    <li><a href="member_credit_transfer.html">credit &amp; credit transfer</a></li>
                                     <li><a href="member_point.html">money transfer</a></li>
                                 </ul>
                             </div>
@@ -376,121 +376,77 @@
                     </div>
                 </div>
             </div>
+            <form th:action='@{/registerNewUser}' method="post">
             <div class="c_right">
                 <div class="c_rBox">
                     <div class="cTab">
                         <table border="0" cellpadding="0" cellspacing="0" class="table7">
                         <tr>
-                                <th>Nickname,first name & last name:</th>
+                                <th>Nickname,first name &amp; last name:</th>
                                 <td>
-                                    <input id="Text" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="name" name="name" th:value="*{name}" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                         
                         
                             <tr>
-                                <th>the date of brith:</th>
+                                <th>the date of birth:</th>
                                 <td>
-                                    <select id="Select1" class="sect1">
-                                        <option>1900</option>
-                                        <option>1901</option>
-                                        <option>1902</option>
-                                        <option>1903</option>
-                                        <option>1904</option>
-                                        <option>1905</option>
-                                        <option>1906</option>
-                                        <option>1907</option>
-                                        <option>1908</option>
-                                        <option>1909</option>
-                                        <option>1910</option>
-                                    </select>
-                                    <select id="Select2" class="sect1">
-                                        <option>01</option>
-                                        <option>02</option>
-                                        <option>03</option>
-                                        <option>04</option>
-                                        <option>05</option>
-                                        <option>06</option>
-                                        <option>07</option>
-                                        <option>08</option>
-                                        <option>09</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                    </select>
-                                    <select id="Select3" class="sect1">
-                                        <option>01</option>
-                                        <option>02</option>
-                                        <option>03</option>
-                                        <option>04</option>
-                                        <option>05</option>
-                                        <option>06</option>
-                                        <option>07</option>
-                                        <option>08</option>
-                                        <option>09</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                        <option>...</option>
-                                    </select>
+                                    <input id="DOB" name="DOB" type="date" th:type="date" th:value="*{DOB}" class="t1" />
                                 </td>
                             </tr>
                             <tr>
                                 <th>gender</th>
                                 <td>
-                                    <input id="Radio1" type="radio" class="sect1" checked="checked" /><span style="float: left; margin-left: 4px;">male</span><input id="Radio2" type="radio" class="sect1" /><span style="float: left; margin-left: 4px;">female</span></td>
+                                    <input id="gender" name="gender" type="radio" class="sect1" /><span style="float: left; margin-left: 4px;">male</span>
+                                    <input id="gender" name="gender" type="radio" class="sect1" /><span style="float: left; margin-left: 4px;">female</span></td>
                             </tr>
                             <tr>
                                 <th>E-mail address (UOW) (log in):</th>
                                 <td>
-                                    <input id="Text1" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="userName" type="text" name="userName" th:value="*{userName}" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                             <tr>
                                 <th>Zip code:</th>
                             <td>
-                                    <input id="Text2" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="zipCode" name="zipCode" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                             
                              <tr>
                                 <th>Suburb:</th>
                             <td>
-                                    <input id="Text3" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="suburb" name="suburb" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                             
                             <tr>
                                 <th>telephone number:</th>
                                 <td>
-                                    <input id="Text4" type="text" class="t2" /></td>
+                                    <input id="telNo" name="telNo" type="text" class="t2" /></td>
                             </tr>
                             
                           
                             <tr>
                                 <th>House number or street name:</th>
                                 <td>
-                                    <input id="Text5" type="text" class="t1" /></td>
+                                    <input id="address" name="address" type="text" class="t1" /></td>
                             </tr>
                             
                             <tr>
                                 <th>Nationality:</th>
                              
                                  <td>
-                                    <select id="SelectNation" class="sect1">
-                                        <option>Australian</option>
-                                        <option>USA</option>
-                                        <option>Britsh</option>
-                                        <option>Chinese</option>
-                                        <option>French</option>
-                                        <option>Vietnamese</option>
-                                       
-                                    </select>
-                                
+                                    <select id="nation" name="nation" class="sect1">
+											<option th:each="nationsing : ${nationsSet}" th:value="${nationsing}" th:text="${nationsing.name}"
+											th:selected="(${nationsing.name} == *{nation.name})"></option>
+									</select>
+                                </td>
                               
                             </tr>
                             
                          </table>
                          
-                         <table color=#999999><th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                         <table color="#999999"><th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                          <td><a href="prod_show.html">
-                                <div class="imgarr_box" color=#999999>Photo or selfie:</div>
+                                <div class="imgarr_box" color="#999999">Photo or selfie:</div>
                                 <img src="images/narr.jpg" width="265" height="265" />
                             </a></td>
                          </table>
@@ -505,15 +461,15 @@
                         <table border="0" cellpadding="0" cellspacing="0"  class="table7">
                             <tr>
                                 <th>current passwords</th>
-                                <td><input id="Text6" type="text" class="t1" /></td>
+                                <td><input id="pwd" name="pwd" type="text" class="t1" /></td>
                             </tr>
                             <tr>
                                 <th>new passwords</th>
-                                <td><input id="Text7" type="text" class="t1" /></td>
+                                <td><input id="newPwd" name="newPwd" type="text" class="t1" /></td>
                             </tr>
                             <tr>
                                 <th>input new passwords again:</th>
-                                <td><input id="Text8" type="text" class="t1" /></td>
+                                <td><input id="confirmPwd" name="confirmPwd" type="text" class="t1" /></td>
                             </tr>
                         </table>
                         <table border="0" cellpadding="0" cellspacing="0" style="border:1px solid #e2e2e2; width:833px; padding-bottom:6px;">
@@ -526,6 +482,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         </div>
         <div class="clear"></div>
         <div class="m_footer">
@@ -615,11 +572,12 @@
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
+        </div>
         </div>
     </div>
 </body>

@@ -2,6 +2,7 @@ package uow.finalproject.webapp.entity;
 
 import java.util.Date;
 
+import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.entityType.Suburb;
 
 public class User {
@@ -15,21 +16,20 @@ public class User {
 	
 	//optional fields
 	String mobile;
-	String nationality;
+	Nationality nationality;
 	Date DOB;
 	String[] potentialInterests;
 	
-	public User(String nickName, String firstName, String lastName, String email, String pwd) {
+	public User(String nickName, String firstName, String lastName, String email) {
 		super();
 		this.nickName = nickName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.pwd = pwd;
 	}
 	
 	public User(String nickName, String firstName, String lastName, String email, String pwd, int zipCode,
-			Suburb suburb, String link) {
+			Suburb suburb, Nationality nation) {
 		super();
 		this.nickName = nickName;
 		this.firstName = firstName;
@@ -38,7 +38,7 @@ public class User {
 		this.pwd = pwd;
 		this.zipCode = zipCode;
 		this.suburb = suburb;
-		this.link = link;
+		this.nationality = nation;
 	}
 
 	public String getNickName() {
@@ -95,10 +95,10 @@ public class User {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-	public String getNationality() {
+	public Nationality getNationality() {
 		return nationality;
 	}
-	public void setNationality(String nationality) {
+	public void setNationality(Nationality nationality) {
 		this.nationality = nationality;
 	}
 	public Date getDOB() {
