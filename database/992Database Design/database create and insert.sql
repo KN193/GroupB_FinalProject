@@ -44,7 +44,7 @@ insert into User(username, password,usertype,nickname, firstname, lastname,verif
 
 CREATE TABLE Service (
   serviceID       INT     AUTO_INCREMENT,
-  provider      VARCHAR(30)  NOT NULL,
+  provider      VARCHAR(30),
   name          VARCHAR(40)  NOT NULL,
   currentPrice  DOUBLE      NOT NULL,
   originalPrice DOUBLE      NOT NULL    DEFAULT 0,
