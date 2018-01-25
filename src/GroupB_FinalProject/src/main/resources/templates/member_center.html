@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -47,8 +47,8 @@
                         <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
                                  <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
@@ -475,11 +475,12 @@
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
+        </div>
         </div>
     </div>
 </body>
