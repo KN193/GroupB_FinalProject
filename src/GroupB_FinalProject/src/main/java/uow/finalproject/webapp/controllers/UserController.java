@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import uow.finalproject.webapp.dao.ServiceDAO;
 import uow.finalproject.webapp.dao.UserDAO;
+import uow.finalproject.webapp.entity.Service;
 import uow.finalproject.webapp.entity.User;
 import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.entityType.Suburb;
@@ -24,40 +26,45 @@ import uow.finalproject.webapp.utility.PasswordGenerator;
 @Controller
 public class UserController {
 
+	// logged user
+	private User usr;
+
 	@Autowired
 	UserDAO userDAO;
+	
+	@Autowired
+	ServiceDAO serviceDAO;
 	
 	@Autowired
 	PasswordGenerator passwordGenerator;
 	
 	@RequestMapping(value="/member_index", method=RequestMethod.GET)
     public ModelAndView loginUser() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("userName", auth.getName());
-		modelAndView.setViewName("member_index");
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_index");
+		
+		if (usr == null) {
+			return modelAndView;
+		}
+		
+		ArrayList<Service>  arr = serviceDAO.findAllService();
+		modelAndView.addObject("services", arr);
+		
 		return modelAndView;
     }
 	
 	@RequestMapping(value="/member_person", method=RequestMethod.GET)
     public ModelAndView member_person() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		ModelAndView modelAndView = new ModelAndView();
-		if (auth.getName().equals("anonymousUser")) {
-			modelAndView.setViewName("index");
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_person");
+		
+		if (usr == null) {
 			return modelAndView;
 		}
 		
 		List<Nationality> nationsSet = new ArrayList<Nationality>(EnumSet.allOf(Nationality.class));
-		
-		String loggedUser = auth.getName();
-		User usr = userDAO.findUser(loggedUser);
-		
-		modelAndView.addObject("userName", loggedUser);
-		modelAndView.addObject("name", usr.getFirstName());
 		modelAndView.addObject("nation", usr.getNationality());
 		modelAndView.addObject("nationsSet", nationsSet);
-		modelAndView.setViewName("member_person");
 		
 		return modelAndView;
     }
@@ -96,5 +103,23 @@ public class UserController {
     		} 
     		
     		return "fail";
+    }
+    
+    private ModelAndView initializeLoggedUser(String viewName) {
+    		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		ModelAndView modelAndView = new ModelAndView();
+		if (auth.getName().equals("anonymousUser")) {
+			modelAndView.setViewName("index");
+			return modelAndView;
+		}
+		
+		
+		String loggedUser = auth.getName();
+		usr = userDAO.findUser(loggedUser);
+		
+		modelAndView.addObject("userName", loggedUser);
+		modelAndView.addObject("name", usr.getFirstName());
+		modelAndView.setViewName(viewName);
+		return modelAndView;
     }
 }

@@ -43,10 +43,6 @@
                                                             <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                                
-                              
-                                
-                               
-                                
                             </ul>
                         </div>
                     </div>
@@ -332,7 +328,7 @@
                             <ul>
                                 <li><a href="index.html">HOME</a></li>
                                 <li><a href="recommendation.html">RECOMMENDATION</a></li>
-                                <li><a href="new service.html">SERVICES</a></li>
+                                <li><a href="new_service">SERVICES</a></li>
                                 <li><a href="discount.html">DISCOUNT</a></li>
                                 <li><a href="first time user.html">FIRST TIME USER</a></li>
                                 <li><a href="prod_list.html">MY SERVICE</a></li>
@@ -372,121 +368,21 @@
                    
                 </div>
                 <div class="m_arri_con">
-                    <ul class="arrBox">
-                        <li class="imgarr">
+                
+                	    <ul class="arrBox" th:each="service : ${services}">
+                         <li class="imgarr">
                             <a href="prod_show.html">
                                 <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
+                                <img th:src="${service.img}" width="265" height="265" />
                             </a>
                         </li>
                         <li class="txtarr">
                             <a href="prod_show.html">
-                                <h4>member price：2 credits<font>market: 3.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
+                                <h4>Current price：<span th:utext="${service.currentPrice}"></span><font>Original price: <span th:utext="${service.originalPrice}"></span></font></h4>
+                                <h5>[<span th:utext="${service.name}"></span>] <span th:utext="${service.description}"></span></h5>
                             </a>
                         </li>
                     </ul>
-                    <ul class="arrBox">
-                        <li class="imgarr">
-                            <a href="prod_show.html">
-                                <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a>
-                        </li>
-                        <li class="txtarr">
-                            <a href="prod_show.html">
-                                <h4>member price：2 credits<font>market: 3.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="arrBox">
-                        <li class="imgarr">
-                            <a href="prod_show.html">
-                                <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a>
-                        </li>
-                        <li class="txtarr">
-                            <a href="prod_show.html">
-                                <h4>member price：2 credits<font>market：150.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="arrBox">
-                        <li class="imgarr">
-                            <a href="prod_show.html">
-                                <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a>
-                        </li>
-                        <li class="txtarr">
-                            <a href="prod_show.html">
-                                <h4>member price：2 credits<font> market: 3.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
-                            </a>
-                        </li>
-                    </ul>
-                    
-                    
-                    <ul class="arrBox">
-                        <li class="imgarr">
-                            <a href="prod_show.html">
-                                <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a>
-                        </li>
-                        <li class="txtarr">
-                            <a href="prod_show.html">
-                                <h4>member price：2 credits<font>market: 3.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="arrBox">
-                        <li class="imgarr">
-                            <a href="prod_show.html">
-                                <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a>
-                        </li>
-                        <li class="txtarr">
-                            <a href="prod_show.html">
-                                <h4>member price：2 credits<font>market: 3.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="arrBox">
-                        <li class="imgarr">
-                            <a href="prod_show.html">
-                                <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a>
-                        </li>
-                        <li class="txtarr">
-                            <a href="prod_show.html">
-                                <h4>member price：2 credits<font>market: 3.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="arrBox">
-                        <li class="imgarr">
-                            <a href="prod_show.html">
-                                <div class="imgarr_box">&nbsp;</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a>
-                        </li>
-                        <li class="txtarr">
-                            <a href="prod_show.html">
-                                <h4>member price：2 credits<font>market: 3.00</font></h4>
-                                <h5>【Brown bread】10g making by hand</h5>
-                            </a>
-                        </li>
-                    </ul>
-                    
                     
                 </div>
             </div>

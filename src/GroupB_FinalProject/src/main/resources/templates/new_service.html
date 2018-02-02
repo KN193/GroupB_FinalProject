@@ -47,8 +47,8 @@
                         <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
                                 <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
@@ -694,16 +694,17 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
+        </div>
         </div>
 </div>
 </body>
