@@ -7,6 +7,7 @@ import uow.finalproject.webapp.entityType.Suburb;
 
 public class Service {
 	// Mandatory fields
+	int serviceID;
 	String provider;
 	String name;
 	float currentPrice, originalPrice;
@@ -21,9 +22,10 @@ public class Service {
 	int rank;
 	String type;
 	
-	public Service(String provider, String name, float currentPrice, float originalPrice, String description,
+	public Service(int serviceID, String provider, String name, float currentPrice, float originalPrice, String description,
 			int capacity, int deal, Date registerDate, String nationality, int rank, String type, String img) {
 		super();
+		this.serviceID = serviceID;
 		this.provider = provider;
 		this.name = name;
 		this.currentPrice = currentPrice;
@@ -36,6 +38,12 @@ public class Service {
 		this.rank = rank;
 		this.type = type;
 		this.img = img;
+	}
+	public int getServiceID() {
+		return serviceID;
+	}
+	public void setServiceID(int serviceID) {
+		this.serviceID = serviceID;
 	}
 	public String getProvider() {
 		return provider;

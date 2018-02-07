@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import uow.finalproject.webapp.dao.CommentDAO;
 import uow.finalproject.webapp.dao.ServiceDAO;
 import uow.finalproject.webapp.dao.UserDAO;
+import uow.finalproject.webapp.entity.Comment;
 import uow.finalproject.webapp.entity.Service;
 import uow.finalproject.webapp.entity.User;
 import uow.finalproject.webapp.utility.PasswordGenerator;
@@ -29,6 +31,9 @@ public class ServiceController {
 	
 	@Autowired
 	ServiceDAO serviceDAO;
+	
+	@Autowired
+	CommentDAO commentDAO;
 	
 	@Autowired
 	PasswordGenerator passwordGenerator;
@@ -87,6 +92,79 @@ public class ServiceController {
 		return modelAndView;
     }
     
+    @RequestMapping(value="/prod_show", method=RequestMethod.GET)
+    public ModelAndView prod_show(@RequestParam(value="serviceID", required=true) int serviceID) {
+    		ModelAndView modelAndView = initializeLoggedUser("prod_show");
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+    		Service  service = serviceDAO.findServiceByID(serviceID);
+    		ArrayList<Comment> comments = commentDAO.findCommentByServiceID(serviceID);
+    		
+    		if (service != null) {
+    			modelAndView.addObject("service", service);
+    			modelAndView.addObject("comments", comments);
+    		}
+    		
+		return modelAndView;
+    }
+
+    @RequestMapping(value="/prod_list", method=RequestMethod.GET)
+    public ModelAndView prod_list(@RequestParam(value="crrPage", required=false) Integer crrPage) {
+    		ModelAndView modelAndView = initializeLoggedUser("new_service");
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+    		ArrayList<Service>  arr = serviceDAO.findServiceByProvider(usr.getEmail());
+    		
+    		// Pagination
+    		if (arr.isEmpty()) {
+    			return modelAndView;
+    		}
+
+    		int totalService = arr.size(); 
+    		int totalPage = 0;
+    		
+    		// No need to paginating 
+    		if (totalService < NUMBER_OF_SERVICE_ON_PAGE) {
+    			modelAndView.addObject("services", arr);
+    			return modelAndView;
+    		}
+    		
+    		if (totalService%NUMBER_OF_SERVICE_ON_PAGE != 0) {
+    			totalPage = totalService/NUMBER_OF_SERVICE_ON_PAGE +1;
+    		} else {
+    			totalPage = totalService/NUMBER_OF_SERVICE_ON_PAGE;
+    		}
+    	
+    		if (crrPage == null) crrPage = 1;
+    		// calculate start pos and end pos
+    		int startPos = 0, endPos = 0;
+    		
+    		startPos = (crrPage-1)*NUMBER_OF_SERVICE_ON_PAGE;
+    		endPos = crrPage*NUMBER_OF_SERVICE_ON_PAGE;
+    		
+    		if (startPos < 0) startPos = 0; // for the beginning of array
+    		if (endPos > totalService) endPos = totalService;
+    		
+    		ArrayList<Service> paginationArr = new ArrayList<Service> (arr.subList(startPos, endPos) );
+    		ArrayList<Integer> pageNum = new ArrayList<Integer>();
+    		for (int i = 1; i <= totalPage; i++) {
+    			pageNum.add(i);
+    		}
+    		
+    		modelAndView.addObject("crrPage", crrPage);
+    		modelAndView.addObject("totalPage", totalPage);
+    		modelAndView.addObject("services", paginationArr);
+    		modelAndView.addObject("pageNum", pageNum);
+    		
+		return modelAndView;
+    }
+
     private ModelAndView initializeLoggedUser(String viewName) {
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		ModelAndView modelAndView = new ModelAndView();
@@ -104,4 +182,5 @@ public class ServiceController {
 		modelAndView.setViewName(viewName);
 		return modelAndView;
     }
+    
 }

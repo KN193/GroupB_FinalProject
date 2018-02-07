@@ -436,13 +436,13 @@
                 <div class="list_img_box">
                             <ul class="proBox" th:each="service : ${services}">
                                 <li class="imgarr">
-                                    <a href="prod_show.html">
+                                    <a th:href="@{prod_show(serviceID=${service.serviceID})}">
                                         <div class="imgb_box">&nbsp;</div>
                                         <img th:src="${service.img}" width="265" height="265" />
                                     </a>
                                 </li>
                                 <li class="txtarr">
-                                    <a href="prod_show.html">
+                                    <a th:href="@{prod_show(serviceID=${service.serviceID})}">
                                         <h4>Current price：<span th:utext="${service.currentPrice}"></span><font>Original price: <span th:utext="${service.originalPrice}"></span></font></h4>
                                         <h5>[<span th:utext="${service.name}"></span>] <span th:utext="${service.description}"></span></h5>
                                     </a>

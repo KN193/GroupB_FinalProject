@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,23 +33,6 @@
     <script src="js/jquery-1.2.6.pack.js" type="text/javascript"></script>
     <script src="js/base.js" type="text/javascript"></script>
 
-    <!--选项卡-->
-    <script type="text/javascript">
-        function nApplys(thisObj, Num) {
-            if (thisObj.className == "active") return;
-            var ApplyObj = thisObj.parentNode.id;
-            var ApplyList = document.getElementById(ApplyObj).getElementsByTagName("li");
-            for (i = 0; i < ApplyList.length; i++) {
-                if (i == Num) {
-                    thisObj.className = "active";
-                    document.getElementById(ApplyObj + "_Content" + i).style.display = "block";
-                } else {
-                    ApplyList[i].className = "normal";
-                    document.getElementById(ApplyObj + "_Content" + i).style.display = "none";
-                }
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -70,10 +53,9 @@
                         <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
                                 <li><a href="member_center.html">member center</a></li>
-                                
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
                         </div>
@@ -342,7 +324,7 @@
                            <ul>
                                  <li><a href="index.html">HOME</a></li>
                                   <li><a href="prod_list.html">RECOMMENDATION</a></li>
-                                <li><a href="prod_list.html">SERVICES</a></li>
+                                <li><a href="new_service">SERVICES</a></li>
                                 
                                 <li><a href="prod_list.html">DISCOUNT</a></li>
                                  <li><a href="point_list.html">FIRST TIME USER</a></li>
@@ -366,7 +348,7 @@
                         <div id="preview">
                             <div class="jqzoom" id="spec-n1" onclick="window.open('http://')">
                                 <img height="450"
-                                    src="images/sww.jpg" jqimg="images/sww.jpg" width="450">
+                                    th:src="${service.img}" th:attr="jqimg=${service.img}" width="450"></img>
                             </div>
                             <div id="spec-n5">
                                 <div class="control" id="spec-left">
@@ -426,14 +408,15 @@
 
                     </div>
                     <div class="s_bRight">
-                        <div class="ptitle">
-                            2017 delicious mooncake
+                        <div class="ptitle" th:text="${service.name}">
                         </div>
                       
                         <div class="ptext">
                             <div class="pleft" style="float: left; margin-top: 18px;">Current Price:</div>
-                            <div class="pprice">49</div>
-                            <div class="pleft" style="float: left; margin-top: 18px; margin-left: 15px;">&nbsp;Service Number(12345678) </div>                          
+                            <div class="pprice" th:text="${service.currentPrice}"></div>
+                            <div class="pleft" style="float: left; margin-top: 18px;">Original Price:</div>
+                            <div class="pprice" th:text="${service.originalPrice}"></div>
+                            <div class="pleft" style="float: left; margin-top: 18px; margin-left: 15px;">&nbsp;Service Number(<span th:text="${service.serviceID}"></span>) </div>                          
                             <div class="blank20">  </div>
                         </div>
                         <div class="blank10">&nbsp;</div>
@@ -449,7 +432,7 @@
                             </div>
                             <div class="pleft" style="float: left; margin-top: 12px; padding-left: 5px;">
                                 <a href="#">（total
-                                0 comments）</a>
+                                <span th:text="${comments.size()}"></span> comments）</a>
                             </div>
                             <div class="clear"></div>
                             <div class="pleft" style="float: left; margin-top: 12px;">sales ranking：</div>
@@ -588,7 +571,7 @@
                             <ul id="myApply">
                                 <li class="active" onmouseover="nApplys(this,0);" style="margin-left: -1px;">service details
                                 </li>
-                                <li class="normal" onmouseover="nApplys(this,1);">customer comments<span>(2)</span></li>
+                                <li class="normal" onmouseover="nApplys(this,1);">customer comments<span>(<span th:text="${comments.size()}"></span>)</span></li>
                                 <li class="normal" onmouseover="nApplys(this,2);">purchase history<span>(2)</span></li>
                             </ul>
                         </div>
@@ -597,12 +580,12 @@
                                 <div class="div1">
                                     <div class="dleft">
                                         <strong>Product introduction：</strong><br />
-                                        XXX asdfasgsdhdjfkhi,ulh,oyuouio,iop  
+                                        <span th:text="${service.description}"></span> 
                                      </div>
                                 </div>
                                 shop address:Austrialia NSW wollonong fairy meadow  1111(frank)   463200   0476145657
                                 <div class="div2">
-                                    <img src="images/moon2.jpg" />
+                                    <img th:src="${service.img}" />
                                 </div>
                                 <div class="blank20">&nbsp;</div>
                             </div>
@@ -611,174 +594,32 @@
                                 <div class="div1">
                                     <div class="dleft">
                                        <strong>Product introduction：</strong><br />
-                                        XXX asdfasgsdhdjfkhi,ulh,oyuouio,iop  
+                                        <span th:text="${service.description}"></span> 
                                     </div>
                                 </div>
                                 <div class="clear"></div>
                                 <div class="discBox">
-                                    <ul class="disc">
+                                    <ul class="disc" th:each="comment : ${comments}">
                                         <li class="disc_left">
                                             <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
+                                                <img th:src="${comment.commenter.photo} == null ? 'images/subs.jpg' : ${comment.commenter.photo}" width="46" height="41" />
                                             </div>
                                             <div class="disc_left_txt">
-                                                Customer Name
+                                                <span th:text="${comment.commenter.nickName}"></span>
                                             </div>
                                         </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
+                                        <li class="disc_right"><span th:text="${comment.commentInfo}"></span><br />
+                                            <font><span th:text="${comment.commentTime}"></span></font>
                                         </li>
                                     </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
-                                    <ul class="disc">
-                                        <li class="disc_left">
-                                            <div class="disc_left_img">
-                                                <img src="images/subs.jpg" width="46" height="41" />
-                                            </div>
-                                            <div class="disc_left_txt">
-                                                Customer Name
-                                            </div>
-                                        </li>
-                                        <li class="disc_right">Good food,Nice day!Service is beautiful!<br />
-                                            <font>2013-07-02 21:56:54</font>
-                                        </li>
-                                    </ul>
+                                    
                                     <div class="blank20">&nbsp;</div>
                                     <div class="s_fanye">
                                         <div class="quotes">
-                                            <span class="disabled">< </span><span class="current">1</span><a href="#?page=2">2</a><a
+                                            <span class="disabled">&lt; </span><span class="current">1</span><a href="#?page=2">2</a><a
                                                 href="#?page=3">3</a><a href="#?page=4">4</a><a href="#?page=5">5</a><a href="#?page=6">6</a><a
                                                     href="#?page=7">7</a>...<a href="#?page=199">199</a><a href="#?page=200">200</a><a
-                                                        href="#?page=2"> > </a>
+                                                        href="#?page=2"> &gt; </a>
                                         </div>
                                     </div>
 
@@ -788,7 +629,7 @@
                                 <div class="div1">
                                     <div class="dleft">
                                        <strong>Product introduction：</strong><br />
-                                        XXX asdfasgsdhdjfkhi,ulh,oyuouio,iop 
+                                        <span th:text="${service.description}"></span>  
                                     </div>
                                 </div>
                                 <div class="blank20">&nbsp;</div>
@@ -917,10 +758,10 @@
                                     <div class="blank20">&nbsp;</div>
                                     <div class="s_fanye">
                                         <div class="quotes">
-                                            <span class="disabled">< </span><span class="current">1</span><a href="#?page=2">2</a><a
+                                            <span class="disabled">&lt; </span><span class="current">1</span><a href="#?page=2">2</a><a
                                                 href="#?page=3">3</a><a href="#?page=4">4</a><a href="#?page=5">5</a><a href="#?page=6">6</a><a
                                                     href="#?page=7">7</a>...<a href="#?page=199">199</a><a href="#?page=200">200</a><a
-                                                        href="#?page=2"> > </a>
+                                                        href="#?page=2"> &gt; </a>
                                         </div>
                                     </div>
                                 </div>
@@ -1011,17 +852,18 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
 </div>
+<script src="js/prod_show.js"></script>
 </body>
 </html>

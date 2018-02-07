@@ -61,11 +61,13 @@ public class UserDAO {
 				String nickname = rs.getString("nickname");
 				String firstname = rs.getString("firstname");
 				String lastname = rs.getString("lastname");
+				String photo = rs.getString("photo");
 				Nationality nation = Nationality.valueOf(rs.getString("nationality"));
 				String email = rs.getString("userName");
 				
 				user = new User(nickname,firstname,lastname,email);
 				user.setNationality(nation);
+				user.setPhoto(photo);
 			}
 			ps.close();
 		} catch (Exception e) {

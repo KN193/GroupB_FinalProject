@@ -16,6 +16,7 @@ public class User {
 	
 	//optional fields
 	String mobile;
+	String photo;
 	Nationality nationality;
 	Date DOB;
 	String[] potentialInterests;
@@ -112,5 +113,12 @@ public class User {
 	}
 	public void setPotentialInterests(String[] potentialInterests) {
 		this.potentialInterests = potentialInterests;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 }
