@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -315,9 +315,9 @@
                         
                         
                            <ul>
-                                 <li><a href="index.html">HOME</a></li>
+                                 <li><a href="member_index">HOME</a></li>
                                   <li><a href="recommendation.html">RECOMMENDATION</a></li>
-                                <li><a href="new service.html">SERVICES</a></li>
+                                <li><a href="new_service">SERVICES</a></li>
                                 
                                 <li><a href="discount.html">DISCOUNT</a></li>
                                  <li><a href="first time user.html">FIRST TIME USER</a></li>
@@ -332,7 +332,7 @@
         <div class="blank5">&nbsp;</div>
         <div id="s_contect">
             <div class="s_contect_cokk">
-                your location:<a href="index.html">HOME</a>&nbsp;&gt;&nbsp;SERVICES
+                your location:<a href="member_index">HOME</a>&nbsp;&gt;&nbsp;SERVICES
             </div>
             <div class="type">
                 <div class="type_hot">
@@ -434,180 +434,38 @@
                     </div>
                 </div>
                 <div class="list_img_box">
-                            <ul class="proBox">
+                            <ul class="proBox" th:each="service : ${services}">
                                 <li class="imgarr">
                                     <a href="prod_show.html">
                                         <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
+                                        <img th:src="${service.img}" width="265" height="265" />
                                     </a>
                                 </li>
                                 <li class="txtarr">
                                     <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
+                                        <h4>Current price：<span th:utext="${service.currentPrice}"></span><font>Original price: <span th:utext="${service.originalPrice}"></span></font></h4>
+                                        <h5>[<span th:utext="${service.name}"></span>] <span th:utext="${service.description}"></span></h5>
                                     </a>
                                 </li>
                             </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="proBox">
-                                <li class="imgarr">
-                                    <a href="prod_show.html">
-                                        <div class="imgb_box">&nbsp;</div>
-                                        <img src="images/moon1.jpg" width="265" height="265" />
-                                    </a>
-                                </li>
-                                <li class="txtarr">
-                                    <a href="prod_show.html">
-                                        <h4>Member Price:20<font>market:150.00</font></h4>
-                                        <h5>【Mooncake】400g handmade mooncake</h5>
-                                    </a>
-                                </li>
-                            </ul>
+                            
+                            
                     <div class="blank20">&nbsp;</div>
                     <div class="s_fanye">
+                         <!--div class="quotes">
+                            <span class="disabled">&lt;&lt;</span>
+                            <span class="current">1</span>
+                            <a href="new_service?crrPage=2">2</a>
+                            <a href="new_service?crrPage=3">3</a>
+                            <a href="new_service?crrPage=4">4</a>
+                            <a href="#?page=2"> &gt;&gt;</a>
+                         </div-->
                          <div class="quotes">
-                            <span class="disabled">&lt;&lt;</span><span class="current">1</span><a href="#?page=2">2</a><a
-                                href="#?page=3">3</a><a href="#?page=4">4</a><a      href="#?page=2"> &gt;&gt;</a>
- </div>
+                            <span th:each="page : ${pageNum}">
+                            <span class="current" th:if="${crrPage}==${page}" th:text="${page}"></span>
+                            <a th:if="${crrPage}!=${page}" th:text="${page}" th:href="@{new_service(crrPage=${page})}"></a>
+                            </span>
+                         </div>
 
                     </div>
                     <div class="blank20">&nbsp;</div>

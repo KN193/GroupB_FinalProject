@@ -31,16 +31,6 @@ public class WebController {
 		return "prod_list";
 	}
 	
-	@RequestMapping(value= {"/member_person"})
-	public String member_person() {
-		return "member_person";
-	}
-	
-	@RequestMapping(value= {"/member_center"})
-	public String member_center() {
-		return "member_center";
-	}
-	
 	@RequestMapping(value= {"/member_index"})
 	public String member_index() {
 		return "member_index";

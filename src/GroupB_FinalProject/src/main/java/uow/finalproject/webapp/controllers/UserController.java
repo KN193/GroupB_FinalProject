@@ -47,8 +47,20 @@ public class UserController {
 			return modelAndView;
 		}
 		
-		ArrayList<Service>  arr = serviceDAO.findAllService();
+		ArrayList<Service>  arr = serviceDAO.findNumberOfService(8);
 		modelAndView.addObject("services", arr);
+		
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/member_center", method=RequestMethod.GET)
+    public ModelAndView member_center() {
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_center");
+		
+		if (usr == null) {
+			return modelAndView;
+		}
 		
 		return modelAndView;
     }
