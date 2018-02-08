@@ -609,7 +609,7 @@
                                             </div>
                                         </li>
                                         <li class="disc_right"><span th:text="${comment.commentInfo}"></span><br />
-                                            <font><span th:text="${comment.commentTime}"></span></font>
+                                            <font><span th:text="${#dates.format(comment.commentTime, 'MM-dd-yyyy hh:mm')}"></span></font>
                                         </li>
                                     </ul>
                                     

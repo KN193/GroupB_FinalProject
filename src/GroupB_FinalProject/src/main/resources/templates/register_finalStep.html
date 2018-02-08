@@ -53,7 +53,7 @@
                         <div class="m_top_menu">
                             <ul>
                                 <li>Welcome <span th:utext="${userName}"></span></li>
-                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
+                                <li><a href="register.html">register</a></li>
                                  <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
@@ -333,65 +333,24 @@
         </div>
         <div class="blank5">&nbsp;</div>
         <div id="c_contect">
-            <div class="s_contect_cokk">
             
             
-            &nbsp;&nbsp;&nbsp;your location:<a href="index.html">HOME</a>&nbsp;&gt;&nbsp;<a href="member_person.html">Member Center</a> &nbsp;&gt;&nbsp;my order
-            </div>
-            <div class="c_type">
-                <div class="c_tBox">
-                    <div class="c_t">
-                        <div class="c_t_cokk">
-                            <img src="images/ren2.jpg" />account management
-                        </div>
-                        <div class="c_t_con">
-                            <div class="clist">
-                                <ul>
-                                    <li><a href="member_center.html">specification</a></li>
-                                    <li><a href="member_person.html" class="chov">personal information</a></li>
-                                    <li><a href="member_purchase_records.html" >purchase records</a></li>
-                                    <li><a href="member_gbook.html" >my message</a></li>
-                                    <li><a href="member_remark.html">my comment</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="blank10">&nbsp;</div>
-                        <div class="c_t_cokk">
-                            <img src="images/dd1.jpg" />operation control
-                        </div>
-                        <div class="c_d_con">
-                            <div class="clist">
-                                <ul>
-                                    <li><a href="member_order.html" >my order</a></li>
-                                     <li><a href="member_add_service.html">add new service</a></li>
-                                     <li><a href="member_my_service_records.html" >My service records</a></li>
-                                     <li><a href="member_discount_offer.html">discount offer</a></li>
-                                    <li><a href="member_address.html">delivery address</a></li>
-                                    <li><a href="member_collect.html">my favorite</a></li>
-                                    <li><a href="member_credit_transfer.html">credit &amp; credit transfer</a></li>
-                                    <li><a href="member_point.html">money transfer</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <form th:action='@{/registerNewUser}' method="post">
             <div class="c_right">
                 <div class="c_rBox">
                     <div class="cTab">
-                    <form th:action='@{/updateUserProfile}' method="post">
                         <table border="0" cellpadding="0" cellspacing="0" class="table7">
                         <tr>
                                 <th>Nickname,first name &amp; last name:</th>
                                 <td>
-                                    <input id="name" name="name" th:value="${user.getFirstName()}" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="name" name="name" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                         
                         
                             <tr>
                                 <th>the date of birth:</th>
                                 <td>
-                                    <input id="DOB" name="DOB" th:type="date" th:value="${user.getDOB()} == null ? '':*{#dates.format(user.getDOB(), 'yyyy-MM-dd')}" class="t1" />
+                                    <input id="DOB" name="DOB" th:type="date" th:value="*{DOB} == null ? '':${#dates.format(DOB, 'yyyy-MM-dd')}" class="t1" />
                                 </td>
                             </tr>
                             <tr>
@@ -403,31 +362,31 @@
                             <tr>
                                 <th>E-mail address (UOW) (log in):</th>
                                 <td>
-                                    <input id="userName" type="text" name="userName" th:value="${userName}" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="userName" type="text" name="userName" th:value="*{userName}" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                             <tr>
                                 <th>Zip code:</th>
                             <td>
-                                    <input id="zipCode" name="zipCode" th:value="${user.getAddress()} == null ? '' : ${user.getAddress().getZipCode()}" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="zipCode" name="zipCode" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                             
                              <tr>
                                 <th>Suburb:</th>
                             <td>
-                                    <input id="suburb" name="suburb" th:value="${user.getAddress()} == null ? '' : ${user.getAddress().getSuburb()}" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
+                                    <input id="suburb" name="suburb" type="text" class="t1" /><span style="float:left;color:#ff3300;">(required)</span></td>
                             </tr>
                             
                             <tr>
                                 <th>telephone number:</th>
                                 <td>
-                                    <input id="telNo" name="telNo" th:value="${user.getMobile()}" type="text" class="t2" /></td>
+                                    <input id="telNo" name="telNo" type="text" class="t2" /></td>
                             </tr>
                             
                           
                             <tr>
                                 <th>House number or street name:</th>
                                 <td>
-                                    <input id="address" name="address" th:value="${user.getAddress()} == null ? '' : ${user.getAddress().getStreet()}" type="text" class="t1" /></td>
+                                    <input id="address" name="address" type="text" class="t1" /></td>
                             </tr>
                             
                             <tr>
@@ -436,7 +395,7 @@
                                  <td>
                                     <select id="nation" name="nation" class="sect1">
 											<option th:each="nationsing : ${nationsSet}" th:value="${nationsing}" th:text="${nationsing.name}"
-											th:selected="(${nationsing.name} == ${user.getNationality().name})"></option>
+											th:selected="(${nationsing.name} == *{nation.name})"></option>
 									</select>
                                 </td>
                               
@@ -454,45 +413,14 @@
                         <table border="0" cellpadding="0" cellspacing="0" style="border:1px solid #e2e2e2; width:833px; padding-bottom:6px;">
                             <tr>
                                 <td colspan="2">
-                                    <span style="float:left; margin-left:440px; margin-top:8px;"><input id="image1" type="image" src="images/obtn2.jpg" onclick="return confirm('Update new info to your account?');" /></span>
+                                    <span style="float:left; margin-left:440px; margin-top:8px;"><input id="image1" type="image" src="images/obtn2.jpg" /></span>
                                 </td>
                             </tr>
                         </table>
-                        </form>
-                        <form th:action='@{/updateUserPassword}' method="post">
-                        <table border="0" cellpadding="0" cellspacing="0" class="table7">
-                            <tr>
-                                <th>current passwords</th>
-                                <td>
-                                		<input type="hidden" id="userName" name="userName" th:value="${userName}"/>
-                                		<input id="pwd" name="pwd" type="password" class="t1" />
-                                		<span th:if="${pwdNotMatched}" style="float:left;color:#ff3300;">    Old password is not matched</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>new passwords</th>
-                                <td><input id="newPwd" name="newPwd" type="password" class="t1" /></td>
-                            </tr>
-                            <tr>
-                                <th>input new passwords again:</th>
-                                <td>
-                                <input id="confirmPwd" name="confirmPwd" type="password" class="t1" />
-                                <span th:if="${newPwdAndConfirmNotMatched}" style="float:left;color:#ff3300;">    New password and confirm password are not matched</span>
-                                </td>
-                            </tr>
-                        </table>
-                        <table border="0" cellpadding="0" cellspacing="0" style="border:1px solid #e2e2e2; width:833px; padding-bottom:6px;">
-                            <tr>
-                                <td colspan="2">
-                                    <span style="float:left; margin-left:440px; margin-top:8px;"><input id="image2" type="image" src="images/obtn1.jpg" onclick="return confirm('Update new password for your account?');" /></span>
-                                </td>
-                            </tr>
-                        </table>
-                        </form>
                     </div>
                 </div>
             </div>
-            
+            </form>
         </div>
         <div class="clear"></div>
         <div class="m_footer">

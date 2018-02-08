@@ -1,12 +1,12 @@
 package uow.finalproject.webapp.entityType;
 
 public enum Suburb {
-	NSW("New South Wales"),
-	QLD("Queensland"),
-	SA("South Australia"),
-	TAS("Tasmania"),
-	VIC("Victoria"),
-	WA("Western Australia");
+	NSW("NSW"), //New South Wales
+	QLD("QLD"), //Queensland
+	SA("SA"), //South Australia
+	TAS("TAS"), //Tasmania
+	VIC("VIC"), //Victoria
+	WA("WA"); //Western Australia
 	
 	private String name;
 	Suburb(String name) {

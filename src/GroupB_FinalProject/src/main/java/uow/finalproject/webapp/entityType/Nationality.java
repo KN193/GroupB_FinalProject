@@ -1,20 +1,25 @@
 package uow.finalproject.webapp.entityType;
 
 public enum Nationality {
-	Australian("Australian"),
-	USA("USA"),
-	British("British"),
-	Chinese("Chinese"),
-	French("French"),
-	Vietnam("Vietnam"),
-	Indian("Indian");
+	Australian("Australian", "Australia"),
+	USA("USA", "United State"),
+	British("British", "England"),
+	Chinese("Chinese", "China"),
+	French("French", "France"),
+	Vietnam("Vietnam", "Vietnam"),
+	Indian("Indian", "India");
 	
 	private String name;
-	Nationality(String name) {
+	private String countryName;
+	Nationality(String name, String countryName) {
 		this.name = name;
+		this.countryName = countryName;
 	}
 	
 	public String getName() {
 		return name;
+	}
+	public String getCountryName() {
+		return countryName;
 	}
 }

@@ -10,10 +10,9 @@ public class User {
 	String nickName, firstName, lastName;
 	String email;
 	String pwd;
-	int zipCode;
-	Suburb suburb;
 	String link;
-	
+	Address address;
+
 	//optional fields
 	String mobile;
 	String photo;
@@ -21,24 +20,24 @@ public class User {
 	Date DOB;
 	String[] potentialInterests;
 	
-	public User(String nickName, String firstName, String lastName, String email) {
+	public User() {};
+	
+	public User(String nickName, String firstName, String lastName, String email, Nationality nation) {
 		super();
 		this.nickName = nickName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.nationality = nation;
 	}
 	
-	public User(String nickName, String firstName, String lastName, String email, String pwd, int zipCode,
-			Suburb suburb, Nationality nation) {
+	public User(String nickName, String firstName, String lastName, String email, String pwd, Nationality nation) {
 		super();
 		this.nickName = nickName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.pwd = pwd;
-		this.zipCode = zipCode;
-		this.suburb = suburb;
 		this.nationality = nation;
 	}
 
@@ -71,18 +70,6 @@ public class User {
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}
-	public int getZipCode() {
-		return zipCode;
-	}
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	}
-	public Suburb getSuburb() {
-		return suburb;
-	}
-	public void setSuburb(Suburb suburb) {
-		this.suburb = suburb;
 	}
 	public String getLink() {
 		return link;
@@ -120,5 +107,13 @@ public class User {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 }
