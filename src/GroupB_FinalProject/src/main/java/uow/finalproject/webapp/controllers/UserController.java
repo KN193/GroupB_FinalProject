@@ -1,5 +1,7 @@
 package uow.finalproject.webapp.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import uow.finalproject.webapp.dao.ServiceDAO;
@@ -108,15 +111,18 @@ public class UserController {
     								,@RequestParam(value="nation", required=false) Nationality nation
     								,@RequestParam(value="telNo", required=false) String telNo
     								,@RequestParam(value="address", required=false) String address
+    								,@RequestParam(value="photo", required=false) MultipartFile photo
     								,@RequestParam(value="DOB", required=false ) @DateTimeFormat(pattern = "yyyy-MM-dd") Date DOB) {
     		String generatedPassword = passwordGenerator.generateNewPassword();
     		System.out.println(generatedPassword);
+    		String photoPath = savePhoto(photo, name);
     		
-    		Address registeredAddress = new Address("home", usr.getNationality().getCountryName(), zipCode, suburb, address, "Wollongong", 1, 1);
+    		Address registeredAddress = new Address("home", nation.getCountryName(), zipCode, suburb, address, "Wollongong", 1, 1);
         User registeredUser = new User(name,name,name,userName, generatedPassword, nation);
         registeredUser.setDOB(DOB);
         registeredUser.setMobile(telNo);
         registeredUser.setAddress(registeredAddress);
+        registeredUser.setPhoto(photoPath);
         
     		if (userDAO.registerNewUser(registeredUser)) {
     			return "index";
@@ -133,13 +139,17 @@ public class UserController {
     								,@RequestParam(value="nation", required=false) Nationality nation
     								,@RequestParam(value="telNo", required=false) String telNo
     								,@RequestParam(value="address", required=false) String address
+    								,@RequestParam(value="photo", required=false) MultipartFile photo
     								,@RequestParam(value="DOB", required=false ) @DateTimeFormat(pattern = "yyyy-MM-dd") Date DOB) {
 
+    		String photoPath = savePhoto(photo, name);
+    	
     		Address updatedAddress = new Address("home", usr.getNationality().getCountryName(), zipCode, suburb, address, "Wollongong", 1, 1);
         User updatedUser = new User(name,name,name,userName,nation);
         updatedUser.setDOB(DOB);
         updatedUser.setMobile(telNo);
         updatedUser.setAddress(updatedAddress);
+        updatedUser.setPhoto(photoPath);
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", updatedUser);
@@ -156,7 +166,26 @@ public class UserController {
     		return modelAndView;
     }
     
-    @RequestMapping(value="/updateUserPassword", method=RequestMethod.POST)
+    private String savePhoto(MultipartFile photo, String usrName) {
+    	// Handling photo upload
+		String dbPath = null;
+		String fullPath = null;
+		try {
+			dbPath = "images/profile/"+usrName+"_ProfilePic.jpg";
+			fullPath = "src/main/resources/static/" + dbPath;
+			String fileTo = new File(fullPath).getAbsolutePath();
+		photo.transferTo(new File(fileTo));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dbPath;
+	}
+
+	@RequestMapping(value="/updateUserPassword", method=RequestMethod.POST)
     public ModelAndView updateUserPassword(@RequestParam(value="userName", required=true) String userName
     								,@RequestParam(value="pwd", required=true) String pwd
     								,@RequestParam(value="newPwd", required=true) String newPwd

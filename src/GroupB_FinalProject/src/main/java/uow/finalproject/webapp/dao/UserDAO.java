@@ -28,7 +28,7 @@ public class UserDAO {
 	
 	public boolean registerNewUser(User usr) {
 		Connection conn = null;
-		String sql = "INSERT INTO User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation, DateOfBirth, mobile) VALUES(?,?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation, DateOfBirth, mobile, photo) VALUES(?,?,?,?,?,?,?,?,?,?,?);";
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -43,6 +43,7 @@ public class UserDAO {
 			ps.setString(8, usr.getNationality().getName()); //////// ???????? Prefernation
 			ps.setDate(9, new java.sql.Date(usr.getDOB().getTime()));
 			ps.setString(10, usr.getMobile());
+			ps.setString(11, usr.getPhoto());
 			ps.executeUpdate();
 			ps.close();
 		} catch (Exception e) {
@@ -136,7 +137,7 @@ public class UserDAO {
 
 	public boolean updateUser(User usr) {
 		Connection conn = null;
-		String sql = "UPDATE User SET nickname=?, firstname=?, lastname=?,Nationality=?, PreferNation=?, DateOfBirth=?, mobile=? WHERE username=?;";
+		String sql = "UPDATE User SET nickname=?, firstname=?, lastname=?,Nationality=?, PreferNation=?, DateOfBirth=?, mobile=?, photo=? WHERE username=?;";
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -147,7 +148,8 @@ public class UserDAO {
 			ps.setString(5, usr.getNationality().getName()); //////// ???????? Prefernation
 			ps.setDate(6, new java.sql.Date(usr.getDOB().getTime()));
 			ps.setString(7, usr.getMobile());
-			ps.setString(8, usr.getEmail());
+			ps.setString(8, usr.getPhoto());
+			ps.setString(9, usr.getEmail());
 			ps.executeUpdate();
 			ps.close();
 		} catch (Exception e) {

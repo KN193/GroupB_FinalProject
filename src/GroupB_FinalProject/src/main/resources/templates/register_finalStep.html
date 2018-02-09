@@ -335,7 +335,7 @@
         <div id="c_contect">
             
             
-            <form th:action='@{/registerNewUser}' method="post">
+            <form th:action='@{/registerNewUser}' enctype="multipart/form-data" method="post">
             <div class="c_right">
                 <div class="c_rBox">
                     <div class="cTab">
@@ -404,10 +404,21 @@
                          </table>
                          
                          <table color="#999999"><th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                         <td><a href="prod_show.html">
+                         <td>
                                 <div class="imgarr_box" color="#999999">Photo or selfie:</div>
-                                <img src="images/narr.jpg" width="265" height="265" />
-                            </a></td>
+                                <input type="file" name="photo" id="photo" />
+                                <img id="previewImg" width="265" height="265" />
+                                <script type="text/javascript">
+                                var reader = new FileReader();
+								reader.onload = function(r_event) {
+								  document.getElementById('previewImg').setAttribute('src', r_event.target.result);
+								}
+								
+								document.getElementsByName('photo')[0].addEventListener('change', function(event) {
+								    reader.readAsDataURL(this.files[0]);
+								});
+								</script>
+                         </td>
                          </table>
                          
                         <table border="0" cellpadding="0" cellspacing="0" style="border:1px solid #e2e2e2; width:833px; padding-bottom:6px;">
