@@ -27,6 +27,7 @@ import uow.finalproject.webapp.entity.Service;
 import uow.finalproject.webapp.entity.User;
 import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.entityType.Suburb;
+import uow.finalproject.webapp.utility.EmailService;
 import uow.finalproject.webapp.utility.PasswordGenerator;
 
 @Controller
@@ -43,6 +44,9 @@ public class UserController {
 	
 	@Autowired
 	PasswordGenerator passwordGenerator;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@RequestMapping(value="/member_index", method=RequestMethod.GET)
     public ModelAndView loginUser() {
@@ -116,6 +120,7 @@ public class UserController {
     		String generatedPassword = passwordGenerator.generateNewPassword();
     		System.out.println(generatedPassword);
     		String photoPath = savePhoto(photo, name);
+    		emailService.sendGeneratedPassword(generatedPassword, userName);
     		
     		Address registeredAddress = new Address("home", nation.getCountryName(), zipCode, suburb, address, "Wollongong", 1, 1);
         User registeredUser = new User(name,name,name,userName, generatedPassword, nation);

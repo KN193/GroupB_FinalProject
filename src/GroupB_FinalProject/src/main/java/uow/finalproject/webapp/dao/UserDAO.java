@@ -92,7 +92,8 @@ public class UserDAO {
 				String lastname = rs.getString("lastname");
 				String photo = rs.getString("photo");
 				String mobile = rs.getString("mobile");
-				Nationality nation = Nationality.valueOf(rs.getString("nationality"));
+//				Nationality nation = Nationality.values()[rs.getString("nationality"];
+				Nationality nation = Nationality.valueOf(rs.getString("nationality").replaceAll(" ", "")); // hack to remove space for enum recognition (Saudi Arabia => SaudiArabia)
 				String email = rs.getString("userName");
 				Date dob = rs.getTimestamp("DateOfBirth");
 				

@@ -7,6 +7,7 @@ public enum Nationality {
 	Chinese("Chinese", "China"),
 	French("French", "France"),
 	Vietnam("Vietnam", "Vietnam"),
+	SaudiArabia("Saudi Arabia", "Saudi Arabia"),
 	Indian("Indian", "India");
 	
 	private String name;
