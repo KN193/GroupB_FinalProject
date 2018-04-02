@@ -1,6 +1,6 @@
-CREATE DATABASE serviceexchange;
+CREATE database serviceechange;
 
-USE serviceexchange;
+use serviceechange;
 
 CREATE TABLE User (
   username     VARCHAR(30),
@@ -9,6 +9,7 @@ CREATE TABLE User (
   nickname     VARCHAR(30) UNIQUE,
   firstname    VARCHAR(20) NOT NULL,
   lastname     VARCHAR(20) NOT NULL,
+  gender       CHAR(1) NOT NULL DEFAULT  'M',
   verified     CHAR        NOT NULL  DEFAULT 'N',
   mobile       VARCHAR(10),
   Nationality  VARCHAR(20),
@@ -19,27 +20,27 @@ CREATE TABLE User (
   virtualMoney DOUBLE      NOT NULL  DEFAULT 100,
   CONSTRAINT user_pk PRIMARY KEY (username),
   CONSTRAINT Ver_check CHECK (verified = 'Y' OR verified = 'N'),
-  CONSTRAINT type_const CHECK (usertype = 'ROLE_user' OR usertype = 'ROLE_admin')
+  CONSTRAINT type_const CHECK (usertype = 'ROLE_user' OR usertype = 'ROLE_admin'),
+  CONSTRAINT genderCheck CHECK (gender ='M' or gender ='F')
 );
 
--- default password is test111
-insert into User VALUES ('xz906@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','ROLE_admin','Rainy','Xinyu','Zhang','Y','0476622798','Chinese','Chinese','1992-07-10','',5,'100');
-insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('jz491@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Frank','Jianbo','Zhao','Y','Chinese','Chinese');
-insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('jr239@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','End','Junxin','Ren','Y','Chinese','Chinese');
-insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('qc851@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Tim','Qiusheng','Chu','Y','Chinese','Chinese');
-insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('adk829@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Asnwin','Asnwin','unknown','Y','Indian','Indian');
-insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('svm636@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Sameer','Sameer','unknown','Y','Saudi Arabia','Saudi Arabia');
-insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('wx432@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Owen','Wenqiang','Xun','Y','Singapore','Singapore');
-insert into User(username, password, nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('saan977@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Ali','unknown','unknown','Y','unknown','unknown');
-insert into User(username, password,usertype,nickname, firstname, lastname,verified,Nationality, PreferNation)
-         VALUES ('hkn193@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','ROLE_admin','Kim','Kim','unknown','Y','Vietnam','Vietnam');
+-insert into User VALUES ('xz906@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','ROLE_admin','Rainy','Xinyu','Zhang','M','Y','0476622798','Chinese','Chinese','1992-07-10','',5,'100');
+ -insert into User(username, password, nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('jz491@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Frank','Jianbo','Zhao','M','Y','Chinese','Chinese');
+ -insert into User(username, password, nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('jr239@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','End','Junxin','Ren','M','Y','Chinese','Chinese');
+ -insert into User(username, password, nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('qc851@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Tim','Qiusheng','Chu','M','Y','Chinese','Chinese');
+ -insert into User(username, password, nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('adk829@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Asnwin','Asnwin','unknown','M','Y','Indian','Indian');
+ -insert into User(username, password, nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('svm636@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Sameer','Sameer','unknown','M','Y','Saudi Arabia','Saudi Arabia');
+ -insert into User(username, password, nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('wx432@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Owen','Wenqiang','xu','M','Y','Singapore','Singapore');
+ -insert into User(username, password, nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('saan977@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','Ali','unknown','unknown','M','Y','unknown','unknown');
+ -insert into User(username, password,usertype,nickname, firstname, lastname,gender,verified,Nationality, PreferNation)
+ -         VALUES ('hkn193@uowmail.edu.au','$2a$10$yJ8EJIf0ezj5uSC0XhyTYuB83o4LsTPml7TfQ8cuE01u/2BBNuf1q','ROLE_admin','Kim','Kim','unknown','M','Y','Vietnam','Vietnam');
 
 
 CREATE TABLE Service (
@@ -88,11 +89,12 @@ insert into SearchRecord(recordID, username, searchInfo) VALUES (0,'jr239@uowmai
 insert into SearchRecord(recordID, username, searchInfo) VALUES (0,'adk829@uowmail.edu.au','spring framework');
 insert into SearchRecord(recordID, username, searchInfo) VALUES (0,'hkn193@uowmail.edu.au','AI information');
 
+
 CREATE TABLE Favourites (
   username  VARCHAR(30) NOT NULL,
   serviceID INT         NOT NULL,
   CONSTRAINT favourites_pk PRIMARY KEY (username, serviceID),
-  CONSTRAINT favourites_fk1 FOREIGN KEY (username) REFERENCES User(username),
+  CONSTRAINT favourites_fk1 FOREIGN KEY (username) REFERENCES user(username),
   CONSTRAINT favourites_fk2 FOREIGN KEY (serviceID) REFERENCES Service(serviceID)
 );
 
