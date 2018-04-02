@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>coment</title>
+    <meta name="generator" content="" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="css/StyleSheet.css" rel="stylesheet" />
+
+    <style type="text/css">
+        body
+        {
+            background: none;
+        }
+
+        .msg_input {
+    width: 400px;
+    border: 1px solid #E0E0E0;
+    padding: 8px 9px;
+    background: none repeat scroll 0% 0% #FFF;
+    font-size: 13px;
+    color: #888;
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.03);
+    border-radius: 2px;
+    margin-left: 10px;
+        }
+        
+textarea.msg_input{width:400px;border:1px solid #e0e0e0;padding:8px 9px;background:#fff;font-size:13px;color:#888;-webkit-box-shadow:0px 2px 0px 0px rgba(0, 0, 0, 0.03);box-shadow:0px 2px 0px 0px rgba(0, 0, 0, 0.03);border-radius:2px; margin-left:10px;}
+    </style>
+</head>
+
+<script type="text/javascript">
+    function cfm_msg() {
+
+        if ($("#title").val() == "") {
+            alert("pls write comment title!");
+            $("#title").focus();
+            return false;
+        }
+
+        if ($("#content").val() == "") {
+            alert("pls write comment");
+            $("#content").focus();
+            return false;
+        }
+        $("#form").submit();
+    }
+
+    $(function () {
+
+
+        $("#title").focus(function () {
+            $("#title").attr("class", "msg_input_on");
+        }).blur(function () {
+            $("#title").attr("class", "msg_input");
+        });
+
+        $("#content").focus(function () {
+            $("#content").attr("class", "msg_input_on");
+        }).blur(function () {
+            $("#content").attr("class", "msg_input");
+        });
+
+        $("#title").focus();
+    });
+</script>
+<body>
+    <div class="subCont">
+
+        <form name="form" id="form" method="post" action="member.html">
+         <div style="width:5px; height:20px;"></div>
+            
+            <span>delivery punctuality  &nbsp;&nbsp;<input name="postmode" type="radio" id="Radio1" value="1" />good
+             &nbsp;&nbsp;<input name="postmode2" type="radio" id="Radio2" value="3"  />normal&nbsp;&nbsp;<input name="postmode3" type="radio" id="Radio3" value="4"  />bad</span> <br>
+            <span>service attitude&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="postmode11" type="radio" id="Radio11" value="1" />good&nbsp;&nbsp;&nbsp;<input name="postmode12" type="radio" id="Radio12" value="3"  />normal&nbsp;&nbsp;<input name="postmode13" type="radio" id="Radio13" value="4"  />bad</span><br>
+           
+           <span>service quality&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="postmode21" type="radio" id="Radio21" value="1" />good&nbsp;&nbsp;&nbsp;<input name="postmode22" type="radio" id="Radio22" value="3" />normal&nbsp;&nbsp;<input name="postmode23" type="radio" id="Radio23" value="4"  />bad</span><br>
+          
+                        
+            
+            <div class="hr_10"></div>
+            <span class="msgtitle">comment content:</span>
+            <textarea name="content" class="msg_input" style="width: 800px; height: 60px; overflow: auto; float:left; margin-left:10px;" id="content"></textarea>
+           
+                        
+            <span class="msgtitle"></span>
+            <div class="blank10">&nbsp;</div>
+             <a href="comment_successfully.html">
+                                    <img src="images/ok1.jpg" width="149" height="42" border="0" /></a>
+           
+            <input type="hidden" name="userid" value="25" />
+        </form>
+
+
+    </div>
+</body>
+</html>
