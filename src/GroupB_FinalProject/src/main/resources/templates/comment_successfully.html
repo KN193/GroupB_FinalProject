@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,46 +30,6 @@
 
     <!--gundong-->
     <script type="text/javascript" src="js/jquery.1.4.2-min.js"></script>
-    <script type="text/javascript">
-        //js无缝滚动代码
-        function marquee(i, direction) {
-            var obj = document.getElementById("marquee" + i);
-            var obj1 = document.getElementById("marquee" + i + "_1");
-            var obj2 = document.getElementById("marquee" + i + "_2");
-            if (direction == "up") {
-                if (obj2.offsetTop - obj.scrollTop <= 0) {
-                    obj.scrollTop -= (obj1.offsetHeight + 20);
-                } else {
-                    var tmp = obj.scrollTop;
-                    obj.scrollTop++;
-                    if (obj.scrollTop == tmp) {
-                        obj.scrollTop = 1;
-                    }
-                }
-            } else {
-                if (obj2.offsetWidth - obj.scrollLeft <= 0) {
-                    obj.scrollLeft -= obj1.offsetWidth;
-                } else {
-                    obj.scrollLeft++;
-                }
-            }
-        }
-
-        function marqueeStart(i, direction) {
-            var obj = document.getElementById("marquee" + i);
-            var obj1 = document.getElementById("marquee" + i + "_1");
-            var obj2 = document.getElementById("marquee" + i + "_2");
-
-            obj2.innerHTML = obj1.innerHTML;
-            var marqueeVar = window.setInterval("marquee(" + i + ", '" + direction + "')", 40);
-            obj.onmouseover = function () {
-                window.clearInterval(marqueeVar);
-            }
-            obj.onmouseout = function () {
-                marqueeVar = window.setInterval("marquee(" + i + ", '" + direction + "')", 20);
-            }
-        }
-    </script>
 
 </head>
 
@@ -87,12 +47,11 @@
                        Hi,welcome to wollonging service exchanges web !
                     </div>
                     <div class="m_top_con_right">
-                        <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
-                               <li><a href="member_order.html">my order</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
+                                 <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
                         </div>
@@ -388,8 +347,8 @@
                    
               </div>
                 <div class="over_more">
-                    Now,go to&nbsp;<a href="prod_show.html">See my comment</a> Or
-                    <a href="member_purchase_records.html">purchase recording</a>
+                    Now,go to&nbsp;<a th:href="@{/prod_show(serviceID=${serviceID})}">See my comment</a> Or
+                    <a href="member_purchase_records">purchase recording</a>
                 </div>
 
             </div>
@@ -404,7 +363,7 @@
                             <ul id="marquee1_1">
                                 <li>
                                     <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
+                                        <img width="155" height="156" src="images/201281616.jpg"/></a>
                                     <div class="txt">
                                         <a href="prod_show.html">JAVA class</a>
                                         <font>160</font>
@@ -412,7 +371,7 @@
                                 </li>
                                 <li>
                                     <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
+                                        <img width="155" height="156" src="images/201281616.jpg"/></a>
                                     <div class="txt">
                                         <a href="prod_show.html">C class</a>
                                         <font>16</font>
@@ -420,7 +379,7 @@
                                 </li>
                                 <li>
                                     <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
+                                        <img width="155" height="156" src="images/201281616.jpg"/></a>
                                     <div class="txt">
                                         <a href="prod_show.html">JAVA class</a>
                                         <font>171</font>
@@ -428,7 +387,7 @@
                                 </li>
                                 <li>
                                     <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
+                                        <img width="155" height="156" src="images/201281616.jpg"/></a>
                                     <div class="txt">
                                         <a href="prod_show.html">JAVA class</a>
                                         <font>160</font>
@@ -436,7 +395,7 @@
                                 </li>
                                 <li>
                                     <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
+                                        <img width="155" height="156" src="images/201281616.jpg"/></a>
                                     <div class="txt">
                                         <a href="prod_show.html">Php class</a>
                                         <font>19</font>
@@ -444,7 +403,7 @@
                                 </li>
                                 <li>
                                     <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
+                                        <img width="155" height="156" src="images/201281616.jpg"/></a>
                                     <div class="txt">
                                         <a href="prod_show.html">IOS class</a>
                                         <font>60</font>
@@ -539,17 +498,19 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
+    </div>
+    <script src="js/comment_successfully.js"></script>
     </div>
 </body>
 </html>

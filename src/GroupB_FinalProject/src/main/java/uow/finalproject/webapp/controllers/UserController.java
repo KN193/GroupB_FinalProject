@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import uow.finalproject.webapp.dao.CommentDAO;
 import uow.finalproject.webapp.dao.ServiceDAO;
 import uow.finalproject.webapp.dao.UserDAO;
 import uow.finalproject.webapp.entity.Address;
+import uow.finalproject.webapp.entity.Comment;
+import uow.finalproject.webapp.entity.Purchased;
 import uow.finalproject.webapp.entity.Service;
 import uow.finalproject.webapp.entity.User;
 import uow.finalproject.webapp.entityType.Nationality;
@@ -41,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	ServiceDAO serviceDAO;
+	
+	@Autowired
+	CommentDAO commentDAO;
 	
 	@Autowired
 	PasswordGenerator passwordGenerator;
@@ -91,6 +96,96 @@ public class UserController {
 		return modelAndView;
     }
 	
+	@RequestMapping(value="/member_purchase_records", method=RequestMethod.GET)
+    public ModelAndView member_purchase_records() {
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_purchase_records");
+		
+		
+		if (usr == null) {
+			return modelAndView;
+		}
+		
+		HashMap<Purchased, Service>  map = serviceDAO.findPurchasedService(usr.getEmail());
+		modelAndView.addObject("purchasedServices", map);
+
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/member_add_comment", method=RequestMethod.GET)
+    public ModelAndView member_add_comment(@RequestParam(value="serviceID", required=true) int serviceID) {
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_add_comment");
+		
+		
+		if (usr == null) {
+			return modelAndView;
+		}
+		
+		modelAndView.addObject("serviceID", serviceID);
+
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/member_add_comment", method=RequestMethod.POST)
+    public ModelAndView member_add_comment(@RequestParam(value="serviceID", required=true) int serviceID,
+    		@RequestParam(value="content", required=true) String content) {
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_add_comment");
+		
+		if (usr == null) {
+			return modelAndView;
+		}
+		
+		Comment cmt = new Comment(serviceID, usr, content, true, new Date());
+		commentDAO.addNewComment(cmt);
+		modelAndView.setViewName("redirect:comment_successfully?serviceID="+serviceID);
+
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/comment_successfully", method=RequestMethod.GET)
+    public ModelAndView comment_successfully(@RequestParam(value="serviceID", required=true) int serviceID) {
+		
+		ModelAndView modelAndView = initializeLoggedUser("comment_successfully");
+		
+		if (usr == null) {
+			return modelAndView;
+		}
+		modelAndView.addObject("serviceID", serviceID);
+
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/member_remark", method=RequestMethod.GET)
+    public ModelAndView member_remark() {
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_remark");
+		
+		if (usr == null) {
+			return modelAndView;
+		}
+		HashMap<Service, Comment> cmts = commentDAO.findAllCommentByCommenter(usr.getEmail());
+		modelAndView.addObject("commentList", cmts);
+
+		return modelAndView;
+    }
+
+	@RequestMapping(value="/delete_comment", method=RequestMethod.POST)
+    public ModelAndView delete_comment(@RequestParam(value="serviceID", required=true) int serviceID) {
+		
+		ModelAndView modelAndView = initializeLoggedUser("member_remark");
+		
+		if (usr == null) {
+			return modelAndView;
+		}
+		
+		commentDAO.deleteComment(serviceID);
+		modelAndView.setViewName("redirect:member_remark");
+
+		return modelAndView;
+    }
+
 	@RequestMapping(value="/register_firstStep", method=RequestMethod.GET)
     public ModelAndView register_firstStep(@RequestParam(value="email", required=true) String email,@RequestParam(value="register", required=true) boolean register) {
 		ModelAndView modelAndView = new ModelAndView();

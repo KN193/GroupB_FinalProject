@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests().antMatchers("/","/recommendation.html","/index.html","/index_login.html", "/register.html",
 											"/register_firstStep" ,"/member_person", "/registerNewUser"
 							).permitAll()
-							.antMatchers("/*").hasRole("user").anyRequest().authenticated().and().formLogin().loginPage("/index_login").permitAll()
+							.antMatchers("/*").hasAnyRole("user", "admin").anyRequest().authenticated().and().formLogin().loginPage("/index_login").permitAll()
 							.defaultSuccessUrl("/member_index").and().logout()
 							.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 							.logoutSuccessUrl("/");

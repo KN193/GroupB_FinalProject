@@ -67,6 +67,7 @@ public class UserDAO {
 			ps.setInt(9, registeredAddress.getUnitNumber());
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -127,6 +128,7 @@ public class UserDAO {
 				address = new Address(type, country, zipCode, suburb, street, city, houseNumber, unitNumber);
 			}
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -173,6 +175,7 @@ public class UserDAO {
 			ps.setString(8, usr.getEmail());
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -210,6 +213,7 @@ public class UserDAO {
 			ps.executeUpdate();
 			
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 2; // other internal error

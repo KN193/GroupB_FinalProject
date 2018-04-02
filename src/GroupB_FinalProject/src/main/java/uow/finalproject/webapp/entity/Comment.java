@@ -27,6 +27,14 @@ public class Comment {
 		this.commentTime = commentTime;
 	}
 	
+	public Comment(int serviceID, User commenter, String commentInfo, boolean visible, Date commentTime) {
+		this.serviceID = serviceID;
+		this.commenter = commenter;
+		this.commentInfo = commentInfo;
+		this.visible = visible;
+		this.commentTime = commentTime;
+	}
+
 	public int getServiceID() {
 		return serviceID;
 	}

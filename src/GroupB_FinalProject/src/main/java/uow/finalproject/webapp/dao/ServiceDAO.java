@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import uow.finalproject.webapp.entity.Purchased;
 import uow.finalproject.webapp.entity.Service;
 
 
@@ -51,6 +53,7 @@ public class ServiceDAO {
 				services.add(service);
 			}
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -88,6 +91,7 @@ public class ServiceDAO {
 				services.add(service);
 			}
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -126,6 +130,7 @@ public class ServiceDAO {
 				services.add(service);
 			}
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -162,11 +167,47 @@ public class ServiceDAO {
 				service = new Service(serviceID, provider, name, crrPrice, oriPrice, description, capacity, deal, registerDate, nation, rank, type, img);
 			}
 			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 		
 		return service;
+	}
+	
+	public HashMap<Purchased, Service> findPurchasedService(String userName) {
+		Connection conn = null;
+		HashMap<Purchased, Service> purchasedServices = new HashMap<Purchased, Service>();
+		String sql = "SELECT * FROM Purchased WHERE userName=?;";
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				int purchasedID = rs.getInt("PurchasedID");
+				int serviceID = rs.getInt("serviceID");
+				int quantity = rs.getInt("quantity");
+				String transferredFrom = rs.getString("transferredFrom");
+				boolean providerCheck = rs.getBoolean("providerCheck");
+				boolean customerCheck = rs.getBoolean("customerCheck");
+				
+				Date purchasedTime = rs.getTimestamp("purchasedTime");
+				Purchased purchased = new Purchased(purchasedID, userName, serviceID, purchasedTime, providerCheck, customerCheck, quantity, transferredFrom);
+				Service detail = findServiceByID(serviceID);
+				
+				purchasedServices.put(purchased, detail);
+				
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return purchasedServices;
 	}
 }

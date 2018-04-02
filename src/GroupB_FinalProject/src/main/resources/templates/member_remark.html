@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -379,34 +379,23 @@
             <div class="c_right">
                 <div class="c_rBox">
                     <div  class="remBox">
-                        <div class="eBox">
+                        <div class="eBox" th:each="comment : ${commentList}">
                             <div class="eBox_txt">
                                 <div class="eBox_title">
                                     <h3>service comment:</h3>
-                                    <font>2017 frank handmade mooncake</font>
-                                    (2014-06-28 14:18) 
-                                    <b>good!!!</b>
+                                    <a th:href="@{prod_show(serviceID=${comment.value.serviceID})}"><font th:utext="${comment.key.description}"></font></a>
+                                    <b th:utext="${comment.value.commentInfo}"> </b>
                                 </div>
                             </div>
+                            		<form th:action="delete_comment">
                                 <div class="eBox_dele">
                                    <input id="Button2" type="button" value="delete" />
+                                   <input type="hidden" name="serviceID" id="serviceID" th:value="${comment.value.serviceID}"></input>
                                 </div>
-                        </div>
-                        <div class="eBox">
-                            <div class="eBox_txt">
-                                <div class="eBox_title">
-                                    <h3>service comment:</h3>
-                                    <font>2017 frank handmade mooncake</font>
-                                    (2014-06-28 14:18) 
-                                    <b>beautiful!!!</b>
-                                </div>
-                            </div>
-                                <div class="eBox_dele">
-                                   <input id="Button3" type="button" value="delete"/>
-                                </div>
+                                </form>
                         </div>
                         <div class="eBox_more">
-                            total <span style="color:#feae23;">2</span> records
+                            total <span style="color:#feae23;" th:utext="${commentList.size()}"></span> records
                         </div>
                     </div>
                 </div>
@@ -491,17 +480,18 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
+    </div>
     </div>
 </body>
 </html>

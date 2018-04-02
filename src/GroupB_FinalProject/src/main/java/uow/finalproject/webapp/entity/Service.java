@@ -2,9 +2,6 @@ package uow.finalproject.webapp.entity;
 
 import java.util.Date;
 
-import uow.finalproject.webapp.entityType.Nationality;
-import uow.finalproject.webapp.entityType.Suburb;
-
 public class Service {
 	// Mandatory fields
 	int serviceID;
