@@ -1,6 +1,6 @@
-CREATE database serviceechange;
+CREATE database serviceexchange;
 
-use serviceechange;
+use serviceexchange;
 
 CREATE TABLE User (
   username     VARCHAR(30),
