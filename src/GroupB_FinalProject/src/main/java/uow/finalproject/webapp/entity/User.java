@@ -1,6 +1,7 @@
 package uow.finalproject.webapp.entity;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.entityType.Suburb;
@@ -20,6 +21,9 @@ public class User {
 	Date DOB;
 	String[] potentialInterests;
 	
+	//shopping cart
+	private static HashMap<Service, Integer> shoppingCart = new HashMap<Service, Integer>();
+
 	public User() {};
 	
 	public User(String nickName, String firstName, String lastName, String email, Nationality nation) {
@@ -115,5 +119,13 @@ public class User {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	
+	public HashMap<Service, Integer> getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(HashMap<Service, Integer> shoppingCart) {
+		this.shoppingCart = shoppingCart;
 	}
 }

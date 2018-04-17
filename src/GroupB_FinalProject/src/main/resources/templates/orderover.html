@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,47 +30,7 @@
 
     <!--gundong-->
     <script type="text/javascript" src="js/jquery.1.4.2-min.js"></script>
-    <script type="text/javascript">
-        //js无缝滚动代码
-        function marquee(i, direction) {
-            var obj = document.getElementById("marquee" + i);
-            var obj1 = document.getElementById("marquee" + i + "_1");
-            var obj2 = document.getElementById("marquee" + i + "_2");
-            if (direction == "up") {
-                if (obj2.offsetTop - obj.scrollTop <= 0) {
-                    obj.scrollTop -= (obj1.offsetHeight + 20);
-                } else {
-                    var tmp = obj.scrollTop;
-                    obj.scrollTop++;
-                    if (obj.scrollTop == tmp) {
-                        obj.scrollTop = 1;
-                    }
-                }
-            } else {
-                if (obj2.offsetWidth - obj.scrollLeft <= 0) {
-                    obj.scrollLeft -= obj1.offsetWidth;
-                } else {
-                    obj.scrollLeft++;
-                }
-            }
-        }
-
-        function marqueeStart(i, direction) {
-            var obj = document.getElementById("marquee" + i);
-            var obj1 = document.getElementById("marquee" + i + "_1");
-            var obj2 = document.getElementById("marquee" + i + "_2");
-
-            obj2.innerHTML = obj1.innerHTML;
-            var marqueeVar = window.setInterval("marquee(" + i + ", '" + direction + "')", 40);
-            obj.onmouseover = function () {
-                window.clearInterval(marqueeVar);
-            }
-            obj.onmouseout = function () {
-                marqueeVar = window.setInterval("marquee(" + i + ", '" + direction + "')", 20);
-            }
-        }
-    </script>
-
+	<script src="js/orderover.js"></script>
 </head>
 
 <body>
@@ -90,10 +50,9 @@
                         <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
-                                <li><a href="member_order.html">my order</a></li>
-                                
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
+                                                            <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
                         </div>
@@ -393,17 +352,16 @@
             <div class="gwc_over">
                 <div class="over_box">
                     <span style="margin-left: 90px; float: left;">
-                        <img src="images/dd3.jpg" /></span>Your order has already been submitted sucessfully,please remember your order number:<span>2014120281100</span>&nbsp;&nbsp;Thank your for shopping! Have a nice day!
+                        <img src="images/dd3.jpg" /></span>Your order has already been submitted successfully&nbsp;&nbsp;Thank your for shopping! Have a nice day!
                     <div class="gwc_over_txt">
-                        your selected delivery method:<font style="font-weight: bold;">no delivery</font><br />
-                        your choosen payment method<font style="font-weight: bold;">nab</font><br />
-                        your total payment amount:<font style="font-family: 微软雅黑; font-size: 14px; color: #c41921; font-weight: bold;">￥</font><font style="font-family: 微软雅黑; font-size: 20px; color: #c41921; font-weight: bold;">17788.</font><font style="font-family: 微软雅黑; font-size: 14px; color: #c41921; font-weight: bold;">00</font><br />
-                        Payee information: Bank XXX;Account Number XXXXXXX.
+                        your selected delivery method: <font style="font-weight: bold;">Deliver to your declared address</font><br />
+                        your choosen payment method: <font style="font-weight: bold;">nab</font><br />
+                        your total payment amount: <font style="font-family: 微软雅黑; font-size: 14px; color: #c41921; font-weight: bold;">AUD </font><font style="font-family: 微软雅黑; font-size: 20px; color: #c41921; font-weight: bold;"><span th:utext="${total}"/></font><font style="font-family: 微软雅黑; font-size: 14px; color: #c41921; font-weight: bold;"></font><br />
                     </div>
                 </div>
                 <div class="over_more">
-                    Now,go to&nbsp;<a href="index.html">Back HOME</a>&nbsp;&nbsp;Or
-                    &nbsp;&nbsp;<a href="member_center.html">Member Center</a>
+                    Now,go to&nbsp;<a href="member_index">Back HOME</a>&nbsp;&nbsp;Or
+                    &nbsp;&nbsp;<a href="member_center">Member Center</a>
                 </div>
 
             </div>
@@ -414,54 +372,13 @@
                 </div>
                 <div class="hort_con">
                     <div id="marquee1" class="marqueeleft">
-                        <div style="width: 8000px;">
+                        <div style="width: 80000px;">
                             <ul id="marquee1_1">
-                                <li>
-                                    <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
+                                <li th:each="service : ${services}">
+                                    <a class="pic" th:href="@{prod_show(serviceID=${service.serviceID})}">
+                                        <img width="155" height="156" th:src="${service.img}"/></a>
                                     <div class="txt">
-                                        <a href="prod_show.html">JAVA class</a>
-                                        <font>160</font>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
-                                    <div class="txt">
-                                        <a href="prod_show.html">C class</a>
-                                        <font>16</font>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
-                                    <div class="txt">
-                                        <a href="prod_show.html">JAVA class</a>
-                                        <font>171</font>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
-                                    <div class="txt">
-                                        <a href="prod_show.html">JAVA class</a>
-                                        <font>160</font>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
-                                    <div class="txt">
-                                        <a href="prod_show.html">Php class</a>
-                                        <font>19</font>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="pic" href="prod_show.html">
-                                        <img width="155" height="156" src="images/201281616.jpg"></a>
-                                    <div class="txt">
-                                        <a href="prod_show.html">IOS class</a>
-                                        <font>60</font>
+                                        <a th:href="@{prod_show(serviceID=${service.serviceID})}"><span th:utext="${service.name}"/></a>
                                     </div>
                                 </li>
                             </ul>
@@ -553,18 +470,20 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
     </div>
+    </div>
+   
 </body>
 </html>
 

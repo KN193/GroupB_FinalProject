@@ -1,6 +1,10 @@
 package uow.finalproject.webapp.controllers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -111,7 +115,173 @@ public class ServiceController {
 		return modelAndView;
     }
 
-    @RequestMapping(value="/prod_list", method=RequestMethod.GET)
+    @RequestMapping(value="/buyProduct", method=RequestMethod.GET, params="action=buyOne")
+    public ModelAndView buyOne(@RequestParam(value="serviceID", required=true) int serviceID,
+    							@RequestParam(value="quantity", required=true) int quantity) {
+    		ModelAndView modelAndView = initializeLoggedUser("buyOne");
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+    		Service  service = serviceDAO.findServiceByID(serviceID);
+    		User purchasedUsr = userDAO.findUserWithDeliveryAddress(usr.getEmail());
+    		usr.getShoppingCart().put(service, quantity);
+    		float total = calculateTotalShoppingCart();
+    		
+    		if (service != null) {
+    			modelAndView.addObject("service", service);
+    			modelAndView.addObject("purchasedUsr", purchasedUsr);
+    			modelAndView.addObject("shoppingCart", usr.getShoppingCart());
+    			modelAndView.addObject("total", total);
+    		}
+    		
+		return modelAndView;
+    }
+    
+    @RequestMapping(value="/buyProduct", method=RequestMethod.GET, params="action=cart")
+    public ModelAndView cart(@RequestParam(value="serviceID", required=true) int serviceID,
+    							@RequestParam(value="quantity", required=true) int quantity) {
+    		ModelAndView modelAndView = initializeLoggedUser("shopping");
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+    		Service  service = serviceDAO.findServiceByID(serviceID);
+    		User purchasedUsr = userDAO.findUserWithDeliveryAddress(usr.getEmail());
+    		if (usr.getShoppingCart().containsKey(service)) {
+    			int value = usr.getShoppingCart().get(service);
+    			value = value + quantity;
+    			usr.getShoppingCart().put(service, value);
+    		} else {
+    			usr.getShoppingCart().put(service, quantity);
+    		}
+    		
+    		float total = calculateTotalShoppingCart();
+    		
+    		if (service != null) {
+    			modelAndView.addObject("service", service);
+    			modelAndView.addObject("purchasedUsr", purchasedUsr);
+    			modelAndView.addObject("shoppingCart", usr.getShoppingCart());
+    			modelAndView.addObject("total", total);
+    		}
+    		
+		return modelAndView;
+    }
+    
+    @RequestMapping(value="/remove_shoppingCartItem", method=RequestMethod.GET)
+    public ModelAndView remove_shoppingCartItem(@RequestParam(value="serviceID", required=true) int serviceID) {
+    		ModelAndView modelAndView = initializeLoggedUser("shopping");
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		User purchasedUsr = userDAO.findUserWithDeliveryAddress(usr.getEmail());
+    		Service  service = serviceDAO.findServiceByID(serviceID);
+    		if (usr.getShoppingCart().containsKey(service)) {
+    			usr.getShoppingCart().remove(service);
+    		}
+    		
+    		float total = calculateTotalShoppingCart();
+    		
+    		if (service != null) {
+    			modelAndView.addObject("service", service);
+    			modelAndView.addObject("purchasedUsr", purchasedUsr);
+    			modelAndView.addObject("shoppingCart", usr.getShoppingCart());
+    			modelAndView.addObject("total", total);
+    		}
+    		
+		return modelAndView;
+    }
+    
+    @RequestMapping(value="/clearShoppingCart", method=RequestMethod.GET)
+    public ModelAndView clearShoppingCart() {
+    		ModelAndView modelAndView = initializeLoggedUser("shopping");
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		User purchasedUsr = userDAO.findUserWithDeliveryAddress(usr.getEmail());
+    		usr.getShoppingCart().clear();
+    		
+    		float total = calculateTotalShoppingCart();
+    		
+    		modelAndView.addObject("purchasedUsr", purchasedUsr);
+    		modelAndView.addObject("shoppingCart", usr.getShoppingCart());
+    		modelAndView.addObject("total", total);
+    		
+		return modelAndView;
+    }
+    
+    @RequestMapping(value="/shoppingAction", method=RequestMethod.POST, params="action=payShoppingCart")
+    public ModelAndView shoppingAction(){
+    		return buyOneProduct();
+    }
+    
+    @RequestMapping(value="/shoppingAction", method=RequestMethod.POST, params="action=delete selected services")
+    public ModelAndView shoppingAction(@RequestParam(value = "idChecked", required=false) List<String> idrates){
+    		ModelAndView modelAndView = initializeLoggedUser("shopping");
+    		
+    		if(idrates == null || idrates.size()==0) {
+    			User purchasedUsr = userDAO.findUserWithDeliveryAddress(usr.getEmail());
+        		float total = calculateTotalShoppingCart();
+        	
+        		modelAndView.addObject("purchasedUsr", purchasedUsr);
+        		modelAndView.addObject("shoppingCart", usr.getShoppingCart());
+        		modelAndView.addObject("total", total);
+    			return modelAndView;
+    		}
+    		
+    		Iterator<Entry<Service, Integer>> it = usr.getShoppingCart().entrySet().iterator();
+    		while (it.hasNext()) {
+	    		Map.Entry<Service, Integer> pair = (Map.Entry<Service, Integer>)it.next();
+	    		for (String t : idrates) {
+	    			if ((pair.getKey().getServiceID()+"").equals(t)) {
+	    				it.remove();
+	    			}
+	    		}
+	    }
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		User purchasedUsr = userDAO.findUserWithDeliveryAddress(usr.getEmail());
+    		float total = calculateTotalShoppingCart();
+    	
+    		modelAndView.addObject("purchasedUsr", purchasedUsr);
+    		modelAndView.addObject("shoppingCart", usr.getShoppingCart());
+    		modelAndView.addObject("total", total);
+    		
+		return modelAndView;
+    }
+    
+    @RequestMapping(value="/orderover", method=RequestMethod.GET)
+    public ModelAndView orderover(@RequestParam(value="total", required=false) Float total) {
+    		ModelAndView modelAndView = initializeLoggedUser("orderover");
+    		ArrayList<Service>  services = serviceDAO.findAllService();
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		modelAndView.addObject("services", services);
+    		modelAndView.addObject("total", total);
+    		
+    		usr.getShoppingCart().clear();
+		return modelAndView;
+    }
+
+    @RequestMapping(value="/buyOneProduct", method=RequestMethod.POST)
+    public ModelAndView buyOneProduct() {
+    		int result = serviceDAO.purchaseItems(usr); // 0 mean no error, 1 mean error with SQL connection or query
+    		ModelAndView modelAndView = new ModelAndView();
+    		
+    		float total = calculateTotalShoppingCart();
+    		modelAndView.setViewName("redirect:orderover?total="+total);
+		return modelAndView;
+    }
+
+	@RequestMapping(value="/prod_list", method=RequestMethod.GET)
     public ModelAndView prod_list(@RequestParam(value="crrPage", required=false) Integer crrPage) {
     		ModelAndView modelAndView = initializeLoggedUser("new_service");
     		
@@ -164,6 +334,23 @@ public class ServiceController {
     		
 		return modelAndView;
     }
+	
+	@RequestMapping(value="/shopping", method=RequestMethod.GET)
+    public ModelAndView shopping(@RequestParam(value="serviceID", required=true) Integer serviceID,
+    								@RequestParam(value="quantity", required=true) Integer quantity) {
+    		ModelAndView modelAndView = initializeLoggedUser("shopping");
+    		Service  service = serviceDAO.findServiceByID(serviceID);
+    		usr.getShoppingCart().put(service, quantity);
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+//    		modelAndView.addObject("services", services);
+//    		modelAndView.addObject("total", total);
+    		
+    		usr.getShoppingCart().clear();
+		return modelAndView;
+    }
 
     private ModelAndView initializeLoggedUser(String viewName) {
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -183,4 +370,13 @@ public class ServiceController {
 		return modelAndView;
     }
     
+    private float calculateTotalShoppingCart() {
+    		float total = 0;
+    		Iterator<Entry<Service, Integer>> it = usr.getShoppingCart().entrySet().iterator();
+    		while (it.hasNext()) {
+	    		Map.Entry<Service, Integer> pair = (Map.Entry<Service, Integer>)it.next();
+	    		total += pair.getKey().getCurrentPrice() * pair.getValue();
+	    }
+		return total;
+	}
 }

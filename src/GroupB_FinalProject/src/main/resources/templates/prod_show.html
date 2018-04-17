@@ -463,32 +463,31 @@
                             <div class="clear"></div>
 
                             <div class="pleft" style="float: left; margin-top: 20px;">amount:</div>
+                            <form th:action='@{/buyProduct}' method="get">
                             <div class="pleft" style="float: left; margin-top: 12px;">
                                 <input type="button" value="" class="btn3" name="goods_cut" onclick="javascript: mount_cut();" />
-                                <input id="number" name="number" type="text" class="formfield_m2" value="1" onblur="changePrice();" />
+                                <input id="quantity" name="quantity" type="text" class="formfield_m2" value="1" onblur="changePrice();" />
                                 <input type="button" value="" class="btn4" name="goods_add" onclick="javascript: mount_add();" />
                             </div>
-                            <div class="pleft" style="float: left; margin-top: 10px; padding-left: 12px;">there are 99 in repertory</div>
+                            <input type="hidden" id="serviceID" name="serviceID" th:value="${service.serviceID}"/>
+                            <div class="pleft" style="float: left; margin-top: 10px; padding-left: 12px;">there are 99 in repository</div>
                             <div class="clear"></div>
                             <div class="pbtn">
-                                <a href="buyOne.html">
-                                    <img src="images/buy2.jpg" width="149" height="42" border="0" id="Button1" /></a>
+                                 <input name="action" value="buyOne" type="image" src="images/buy2.jpg"  />
                             </div>
                             <div class="pbtn">
-                                <a href="shopping.html">
-                                    <img src="images/btn2.jpg" width="149" height="42" border="0" id="Button2" /></a>
-                                   
+                                   <input name="action" value="cart" type="image" src="images/btn2.jpg"  />
                             </div>
                             <div class="pbtn">
                                 <a href="member_collect.html">
                                     <img src="images/btn4.jpg" width="149" height="42" border="0" id="Button3" /></a>
-                                   
                             </div><div class="pbtn">
                                 <a href="prod_list.html">
                                     <img src="images/btn5.jpg" width="149" height="42" border="0" id="Button4" /></a>
                                    
                             </div>
                             <div class="clear"></div>
+                            </form>
                         </div>
 
 

@@ -138,6 +138,68 @@ public class UserDAO {
 		return user;
 	}
 
+	public User findUserWithDeliveryAddress(String usrName) {
+		Connection conn = null;
+		User user = null;
+		Address address = null;
+		String sql = "SELECT * FROM User WHERE userName=?;";
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usrName);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String nickname = rs.getString("nickname");
+				String firstname = rs.getString("firstname");
+				String lastname = rs.getString("lastname");
+				String photo = rs.getString("photo");
+				String mobile = rs.getString("mobile");
+//				Nationality nation = Nationality.values()[rs.getString("nationality"];
+				Nationality nation = Nationality.valueOf(rs.getString("nationality").replaceAll(" ", "")); // hack to remove space for enum recognition (Saudi Arabia => SaudiArabia)
+				String email = rs.getString("userName");
+				Date dob = rs.getTimestamp("DateOfBirth");
+				
+				user = new User(nickname,firstname,lastname,email,nation);
+				user.setPhoto(photo);
+				user.setDOB(dob);
+				user.setMobile(mobile);
+			}
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		sql = "SELECT * FROM Address WHERE owner=? AND type='delivery';";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usrName);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String type = rs.getString("type");
+				int zipCode = rs.getInt("ZIPCode");
+				String country = rs.getString("country");
+				String city = rs.getString("city");
+				String street = rs.getString("street");
+				Suburb suburb = Suburb.valueOf(rs.getString("state"));
+				int houseNumber = rs.getInt("houseNumber");
+				int unitNumber = rs.getInt("unitNumber");
+				
+				address = new Address(type, country, zipCode, suburb, street, city, houseNumber, unitNumber);
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		user.setAddress(address);
+		return user;
+	}
+
 	public boolean updateUser(User usr) {
 		Connection conn = null;
 		String sql = "UPDATE User SET nickname=?, firstname=?, lastname=?,Nationality=?, PreferNation=?, DateOfBirth=?, mobile=?, photo=? WHERE username=?;";

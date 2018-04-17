@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,7 +30,7 @@
 
     <!--推荐-->
 
-    <link media="screen" href="css/lanrentuku.css" type="text/css" rel="stylesheet">
+    <link media="screen" href="css/lanrentuku.css" type="text/css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -321,7 +321,7 @@
                            <ul>
                                  <li><a href="index.html">HOME</a></li>
                                   <li><a href="recommendation.html">RECOMMENDATION</a></li>
-                                <li><a href="new service.html">NEW SERVICE</a></li>
+                                <li><a href="new_service">NEW SERVICE</a></li>
                                 
                                 <li><a href="discount.html">DISCOUNT</a></li>
                                  <li><a href="first time user.html">FIRST TIME USER</a></li>
@@ -355,105 +355,51 @@
                             </span>&nbsp;select all</td>
                             <td width="272" align="left" valign="top">service information</td>
                             <td width="120" align="left" valign="top">unit price</td>
-                            <td width="170" align="left" valign="top" class="gwc_color">wollongong</td>
+                            <!--td width="170" align="left" valign="top" class="gwc_color">wollongong</td-->
                             <td width="148" align="left" valign="top">amount</td>
                             <td width="140" align="left" valign="top">subtotal</td>
                             <td align="left" valign="top">operate</td>
                         </tr>
                     </table>
                 </div>
-                <form id="form1" method="post" action="orderinfo.php">
+                <form id="form1" method="post" th:action="@{/shoppingAction}">
                     <div class="gwc_b">
                       
                         <div class="gwc_tops_list">
                             <table width="1100" border="0" cellspacing="0" cellpadding="0">
-                                <tr id='tr236' class="gwc_actual_z">
-                                    <td width="54" height="82" align="center" valign="middle">
-                                        <input name="id[]" id="id0" type="checkbox" value="236" checked="CHECKED" onclick="cart_chk_one(0)" /></td>
-                                    <td width="90" align="left" valign="middle"><span class="tp01">
-                                        <img src="images/1416407079.jpg" width="60" height="60" /></span></td>
-                                    <td width="205" align="left" valign="middle">chicken fired rice <strong class="color05"></strong></td>
-                                    <td width="190" align="center" valign="middle"><span id='Unit_price0'>2300.00</span></td>
-                                    <td width="140" align="left" valign="middle">repertory:30</td>
-                                    <td width="140" align="center" valign="middle">
+                                <tr id='tr236' class="gwc_actual_z" th:each="item : ${shoppingCart}">
+                                    <td width="52" height="82" align="center" valign="middle">
+                                        <input th:name="idChecked" th:value="${item.key.serviceID}" type="checkbox" /></td>
+                                    <td width="100" align="left" valign="middle"><span class="tp01">
+                                        <img th:src="${item.key.img}" width="60" height="60" /></span></td>
+                                    <td width="272" align="left" valign="middle"><span th:utext="${item.key.name}"/> <strong class="color05"></strong></td>
+                                    <td width="120" align="left" valign="middle"><span id='Unit_price0'><span th:utext="${item.key.currentPrice}"/></span></td>
+                                    <!--d width="140" align="left" valign="middle">repertory:30</td-->
+                                    <td width="148" align="left" valign="middle">
 
-                                        <input type="hidden" id='housenum0' value="30">
-                                        <a href="javascript:;" onclick="UpdateShopCart(236,'-1',0,3)" class="tl">
-                                            <img src="images/gwc_9.jpg" /></a>
-                                        <input name="num0" type="text" class="text04" id="num0" value="1" onkeyup="UpdateShopCart(236,'0',0,3)" />
-                                        <a href="javascript:;" onclick="UpdateShopCart(236,'1',0,3)" class="tl">
-                                            <img src="images/gwc_10.jpg" /></a>
-
+                                        <span th:utext="${item.value}"/>
                                     </td>
-                                    <td width="130" align="center" valign="middle">
+                                    <td width="140" align="left" valign="middle">
                                         <div id='kc0' class="shopcart_popup1" style="display: none"></div>
-                                        <strong class="color05">¥<span id='total0'>2300.00</span></strong></td>
-                                    <td width="130" align="center" valign="middle">
+                                        <strong class="color05">AUD <span th:utext="${item.key.currentPrice} * ${item.value}"/></strong></td>
+                                    <td align="left" valign="middle">
                                         <!--<a href="#">收藏</a> -->
-                                        <a href="javascript:;" onclick="DelShopCart(236,0)">delete</a></td>
+                                        <a th:href="@{/remove_shoppingCartItem(serviceID=${item.key.serviceID})}">delete</a></td>
                                 </tr>
-                                <tr id='tr211' class="gwc_actual_z">
-                                    <td width="54" height="82" align="center" valign="middle">
-                                        <input name="id1" id="id1" type="checkbox" value="211" checked="CHECKED" onclick="cart_chk_one(1)" /></td>
-                                    <td width="90" align="left" valign="middle"><span class="tp01">
-                                        <img src="images/1416400002.jpg" width="60" height="60" /></span></td>
-                                    <td width="205" align="left" valign="middle">water gun<strong class="color05"></strong></td>
-                                    <td width="190" align="center" valign="middle"><span id='Unit_price1'>2000.00</span></td>
-                                    <td width="140" align="left" valign="middle">repertory:30</td>
-                                    <td width="140" align="center" valign="middle">
-
-                                        <input type="hidden" id='housenum1' value="30">
-                                        <a href="javascript:;" onclick="UpdateShopCart(211,'-1',1,3)" class="tl">
-                                            <img src="images/gwc_9.jpg" /></a>
-                                        <input name="num1" type="text" class="text04" id="num1" value="1" onkeyup="UpdateShopCart(211,'0',1,3)" />
-                                        <a href="javascript:;" onclick="UpdateShopCart(211,'1',1,3)" class="tl">
-                                            <img src="images/gwc_10.jpg" /></a>
-
-                                    </td>
-                                    <td width="130" align="center" valign="middle">
-                                        <div id='kc1' class="shopcart_popup1" style="display: none"></div>
-                                        <strong class="color05">¥<span id='total1'>2000.00</span></strong></td>
-                                    <td width="130" align="center" valign="middle">
-                                        <!--<a href="#">收藏</a> -->
-                                        <a href="javascript:;" onclick="DelShopCart(211,1)">delete</a></td>
-                                </tr>
-                                <tr id='tr245' class="gwc_actual_z">
-                                    <td width="54" height="82" align="center" valign="middle">
-                                        <input name="id[]" id="id2" type="checkbox" value="245" checked="CHECKED" onclick="cart_chk_one(2)" /></td>
-                                    <td width="90" align="left" valign="middle"><span class="tp01">
-                                        <img src="images/1416404794.jpg" width="60" height="60" /></span></td>
-                                    <td width="205" align="left" valign="middle">(bear）JSQ-A50D1 <strong class="color05"></strong></td>
-                                    <td width="190" align="center" valign="middle"><span id='Unit_price2'>567.00</span></td>
-                                    <td width="140" align="left" valign="middle">repertory:56</td>
-                                    <td width="140" align="center" valign="middle">
-
-                                        <input type="hidden" id='housenum2' value="56">
-                                        <a href="javascript:;" onclick="UpdateShopCart(245,'-1',2,3)" class="tl">
-                                            <img src="images/gwc_9.jpg" /></a>
-                                        <input name="num2" type="text" class="text04" id="num2" value="1" onkeyup="UpdateShopCart(245,'0',2,3)" />
-                                        <a href="javascript:;" onclick="UpdateShopCart(245,'1',2,3)" class="tl">
-                                            <img src="images/gwc_10.jpg" /></a>
-
-                                    </td>
-                                    <td width="130" align="center" valign="middle">
-                                        <div id='kc2' class="shopcart_popup1" style="display: none"></div>
-                                        <strong class="color05">¥<span id='total2'>567.00</span></strong></td>
-                                    <td width="130" align="center" valign="middle">
-                                        <!--<a href="#">收藏</a> -->
-                                        <a href="javascript:;" onclick="DelShopCart(245,2)">delete</a></td>
-                                </tr>
+                                
                             </table>
                         </div>
                     </div>
 
                     <div class="gwc_b3">
                         <span class="gwc_l1">&nbsp;
-                            <input id="Checkbox1" type="checkbox" checked="checked" class="check1" />select all
-                            &nbsp;&nbsp;<a href="javascript:;">delete selected services</a>
-                            &nbsp;&nbsp;<a href="javascript:;">clear shopping cart</a></span>
-                        <span class="gwc_wzl"><span id="totalnum" class="color13">3</span>&nbsp;services
-                               &nbsp;&nbsp;total price：<span class="color06"><span id="totalgoodsprice">4867.00</span></span><br />
-                            <strong>total price</strong>(exclude delivery fee):<strong class="color13"><span id='totalprice'>4867.00</span></strong></span><span class="gwc_an"><a href="##"><img src="images/gwc_11.jpg" class="gwc1" /></a><a href="orderinfo.html"><img id="jiesuan" src="images/gwc_12.jpg" class="gwc2" /></a></span>
+                            <input name="action" value="delete selected services" type="image" src=""/>
+                            &nbsp;&nbsp;<a href="@{/clearShoppingCart}">clear shopping cart</a></span>
+                        <span class="gwc_wzl"><span id="totalnum" class="color13"><span th:utext="${shoppingCart.size()}"/></span>&nbsp;services
+                               &nbsp;&nbsp;total price：<span class="color06"><span id="totalgoodsprice"><span th:utext="${total}"/></span></span><br />
+                            <strong>total price</strong>(exclude delivery fee):<strong class="color13"><span id='totalprice' th:utext="${total}">
+                            </span></strong></span><span class="gwc_an"><a th:href="/member_index"><img src="images/gwc_11.jpg" class="gwc1" /></a>
+                            <input name="action" type="image" value="payShoppingCart" id="jiesuan" src="images/gwc_12.jpg" class="gwc2" /></span>
                     </div>
                 </form>
                 <div style="clear: both"></div>
@@ -487,8 +433,9 @@
                                     <li><a
                                         href="prod_show.html" target="_blank">
                                         <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
+                                            src="images/1416400002.jpg" width="162" height="162"/></a>
+<span ><a href="prod_show.html" target="_blank" style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class
+</a></span>
                                         <a class="link"
                                             href="prod_show.html" target="_blank">19.00</a>
                                         <a class="link" href="member_order.html">
@@ -498,112 +445,15 @@
                                     <li><a
                                         href="prod_show.html" target="_blank">
                                         <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
+                                            src="images/1416400002.jpg" width="162" height="162"/></a>
+<span ><a href="prod_show.html"  target="_blank" style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
                                         <a class="link"
                                             href="prod_show.html" target="_blank">14</a>
                                         <a class="link" href="member_order.html">
                                             <img src="images/add2.jpg" width="82" height="24" />
                                         </a>
                                     </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li><li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
-                                    <li><a
-                                        href="prod_show.html" target="_blank">
-                                        <img
-                                            src="images/1416400002.jpg" width="162" height="162"></a>
-<span ><a href="prod_show.html"  target="_blank"style="width:162px; float:left; font-size:12px; color:#373737; font-weight:normal; margin-top:10px;">C++ online class</a></span>
-                                        <a class="link"
-                                            href="prod_show.html" target="_blank">14</a>
-                                        <a class="link" href="member_order.html">
-                                            <img src="images/add2.jpg" width="82" height="24" />
-                                        </a>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -695,17 +545,18 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
+    </div>
     </div>
 </body>
 </html>

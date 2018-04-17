@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import uow.finalproject.webapp.entity.Purchased;
 import uow.finalproject.webapp.entity.Service;
+import uow.finalproject.webapp.entity.User;
 
 
 @Component
@@ -209,5 +213,33 @@ public class ServiceDAO {
 		}
 		
 		return purchasedServices;
+	}
+	
+	public int purchaseItems(User usr) {
+		Connection conn = null;
+		Iterator<Entry<Service, Integer>> it = usr.getShoppingCart().entrySet().iterator();
+		String sql = "INSERT INTO Purchased(username, serviceID, purchasedTime, providerCheck, customerCheck,quantity) VALUES(?,?,?,?,?,?);";
+		try {
+		conn = dataSource.getConnection();
+		PreparedStatement ps = conn.prepareStatement(sql);
+	    while (it.hasNext()) {
+	    		Map.Entry<Service, Integer> pair = (Map.Entry<Service, Integer>)it.next();
+			ps.setString(1, usr.getEmail());
+			ps.setInt(2, pair.getKey().getServiceID());
+			ps.setDate(3, new java.sql.Date(new java.util.Date().getTime()));
+			ps.setString(4, "Y");
+			ps.setString(5, "Y");
+			ps.setInt(6, pair.getValue());
+	        ps.addBatch();
+	        
+	    }
+		ps.executeBatch();
+		ps.close();
+		conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}
+		return 0;
 	}
 }

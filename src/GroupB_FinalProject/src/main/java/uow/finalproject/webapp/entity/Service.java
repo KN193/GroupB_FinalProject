@@ -1,8 +1,9 @@
 package uow.finalproject.webapp.entity;
 
 import java.util.Date;
+import java.util.Objects;
 
-public class Service {
+public class Service implements Comparable<Service>{
 	// Mandatory fields
 	int serviceID;
 	String provider;
@@ -115,4 +116,21 @@ public class Service {
 		this.img = img;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return ((Service)obj).getServiceID() == this.serviceID;
+	}
+	@Override
+	public int compareTo(Service o) {
+		if (o.getServiceID() == this.serviceID) {
+			return -1;
+		}
+		return 1;
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return Objects.hash(serviceID,provider,name);
+	}
 }

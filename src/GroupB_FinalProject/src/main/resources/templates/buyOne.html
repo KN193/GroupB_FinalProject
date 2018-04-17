@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -47,10 +47,10 @@
                         <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
-                                <li><a href="member_center.html">member center</a></li>
-                              <li style="background: none;"><a href="service.html">service center</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
+                                                            <li><a href="member_center.html">member center</a></li>
+                                <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
                         </div>
                     </div>
@@ -341,14 +341,14 @@
         </div>
         <div class="blank20">&nbsp;</div>   
         <!--  body  开始  -->
-        <form id="form2" method="post" action="##">
+        <form id="form2" th:action='@{/buyOneProduct}' method="post">
             <div class="gwc_body_one" style="clear: both">
                 <div class="mt">fill in and check order information</div>
                 <div class="mt_padding" id="souhuoren">
-                    <div class="title">receiver information<a href="javascript:;">[modify]</a><span style="color: #F00" id="contact"></span></div>
+                    <div class="title">Receiver information<a href="javascript:;">[modify]</a><span style="color: #F00" id="contact"></span></div>
                     <div id="address" class="content"></div>
                     <div onclick="selectaddr(0,1)" id="div0" class="addrlist2">
-                        <input onclick="Calculate()" name="aid" id="aid0" value="22" checked="checked" type="radio">
+                        <input onclick="Calculate()" name="aid" id="aid0" value="22" checked="checked" type="radio"/>
                         <span>Austrialia NSW wollonong fairy meadow&nbsp;&nbsp;1111(frank)</span>&nbsp;&nbsp;
         463200&nbsp;&nbsp;
         0476145657&nbsp;&nbsp;
@@ -358,80 +358,64 @@
                     </div>
 
 
-                    <form id="form1" method="post">
                         <div class="shdz_nr">
                             <ul>
-                                <li><span class="shdz_wz">reveiver:</span><span class="shdz_sr">
-                                    <input class="shdz_text" name="rec_name" id="rec_name" type="text">
+                                <li><span class="shdz_wz">Receiver:</span><span class="shdz_sr">
+                                    <input th:value="${purchasedUsr.getEmail()}" class="shdz_text" name="rec_name" id="rec_name" type="text"/>
                                     &nbsp;*</span><span id="rec_nameTip"></span></li>
 
-                                <li style="height: 67px;"><span class="shdz_wz">address:</span><span class="shdz_sr">
+                                <li style="height: 67px;"><span class="shdz_wz">Address:</span><span class="shdz_sr">
 
-                                            <select name="AddrCountry" id="AddrCountry" onchange="do_area('AddrCountry','AddrProvince','select province')" class="in100">
-                                <option selected="selected" value="">city</option>
-                                        <option value="1">wollongong</option>
-                                        <option value="2">figtree</option>
-                                        <option value="3">corrimal</option>
-                                    </select>
-                                    <select name="AddrProvince" id="AddrProvince" onchange="do_area('AddrProvince','AddrCity','add area')" class="in100">
+                                    <!--select name="AddrProvince" id="AddrProvince" class="in100">
                                         <option selected="selected" value="">fairy meadow</option>
 
                                         <option selected="selected" value="">north wollongong</option>
      
-     <option selected="selected" value="">west wollonong</option>                               </select>
-             </select>
-                                    <span id="AddrCountryTip"></span><span id="AddrProvinceTip"></span><span id="AddrCityTip"></span><span id="AddrAreaTip"></span>
-                                    <br>
+                                        <option selected="selected" value="">west wollongong</option>
+                                    </select-->
+                                    <!--br/-->
 
 
-                                    <input name="cur_address" class="shdz_text2" id="cur_address" style="margin-left: 103px;" size="" type="text">
+                                    <input th:value="${purchasedUsr.getAddress().getHouseNumber()} + ', ' + ${purchasedUsr.getAddress().getStreet()}
+                                    + ' St, ' + ${purchasedUsr.getAddress().getCity()}
+                                    + ', ' + ${purchasedUsr.getAddress().getSuburb()}
+                                    + ', ' + ${purchasedUsr.getAddress().getCountry()}" name="cur_address" class="shdz_text2" id="cur_address"  size="" type="text"/>
                                     &nbsp;*&nbsp;&nbsp;<!--<span class="shdz_color1">不需要重复填写省/市/区</span>--></span><span id="cur_addressTip"></span></li>
-                                <li><span class="shdz_wz">zip code:</span><span class="shdz_sr">
-                                    <input class="shdz_text" name="zipcode" id="zipcode" type="text">
+                                <li><span class="shdz_wz">Zip code:</span><span class="shdz_sr">
+                                    <input th:value="${purchasedUsr.getAddress().getZipCode()}" class="shdz_text" name="zipcode" id="zipcode" type="text"/>
                                     &nbsp;*&nbsp;&nbsp;</span><span id="zipcodeTip"></span></li>
-                                <li><span class="shdz_wz">telephone:</span><span class="shdz_sr">
-                                    <input class="shdz_text" name="phone" id="phone" type="text">
+                                <li><span class="shdz_wz">Mobile:</span><span class="shdz_sr">
+                                    <input th:value="${purchasedUsr.getMobile()}"  class="shdz_text" name="phone" id="phone" type="text"/>
                               &nbsp;* &nbsp;&nbsp;</span><span id="phoneTip" style="width: 250px"></span></li>
-                                <li><span class="shdz_wz">fix phone:</span><span class="shdz_sr">
-                                    <input class="shdz_text" name="telephone" id="telephone" type="text">
+                                <li><span class="shdz_wz">Telephone:</span><span class="shdz_sr">
+                                    <input th:value="${purchasedUsr.getMobile()}" class="shdz_text" name="telephone" id="telephone" type="text"/>
                                     <!--<span class="shdz_g">-</span>
                     <input type="text" class="shdz_text5" />
                     <span class="shdz_g">-</span>
                     <input type="text" class="shdz_text4" />
                     &nbsp;&nbsp;<span class="shdz_color1">区号-电话号码-分机</span>-->
                                 </span></li>
-                                <li><span> Set as default:</span><span class="shdz_sr">
-                                    <input name="is_first" id="is_first" value="1" type="checkbox">
-                                    <input name="act" id="act" value="addr" type="hidden">
-                                    <input name="id" id="id" value="" type="hidden">
-                                    <input name="act1" id="act1" value="add" type="hidden">
-                                </span></li>
-                                <li><span class="shdz_bc">
-                                    <img src="images/shdz_2.jpg" style="cursor: pointer; margin-left:30px;" onclick="ajaxdosubmit('form1','orderinfo.php','address')">
-                                    <!--&nbsp;使用代收货(自提) -->
-                                </span></li>
                             </ul>
                             <div style="clear: both"></div>
                         </div>
-                    </form>
                 </div>
                 <div class="mt_padding" id="peisong">
                     <div class="title">delivery<span class="shdz_sr">&nbsp;*</span></div>
 
                     <div class="content">
 
-                        <div class="content_title1"><span class="title">delivery method</span>：<span style="color: #F00" id="postmode"></span></div>
+                        <div class="content_title1"><span class="title">Delivery method</span>：<span style="color: #F00" id="postmode"></span></div>
 
-                        <input name="postmode" type="radio" id="Radio1" value="1" onclick="Calculate()" />no delivery<br>
+                        <input name="postmode" type="radio" id="Radio1" value="1" onclick="Calculate()" />No delivery<br/>
 
-                        <input name="postmode" type="radio" id="Radio2" value="3" onclick="Calculate()" />delivery by seller<br>
+                        <input name="postmode" type="radio" id="Radio2" value="3" onclick="Calculate()" />Delivery by seller<br/>
 
-                        <input name="postmode" type="radio" id="Radio3" value="4" onclick="Calculate()" />delivery by third parth company<br>
+                        <input name="postmode" type="radio" id="Radio3" value="4" onclick="Calculate()" />Delivery by third parth company<br/>
                         <input id="sid" type="hidden" value="3" />
                         <input id="TemPricing" type="hidden" value="0" />
-                        <div class="content_title1">time requirement：</div>
+                        <!--div class="content_title1">Time requested：</div-->
                        
-                      <ul>
+                      <!--ul>
                       <li></span><span class="shdz_sr">   &nbsp;&nbsp;Year&nbsp; &nbsp;&nbsp;&nbsp;Month&nbsp;&nbsp;Day&nbsp;&nbsp;&nbsp;Hour&nbsp;&nbsp;&nbsp;Minute</span></li>
                                 <li><span class="shdz_sr">
                                      <select id="Select1" class="sect1">
@@ -576,32 +560,44 @@
                                         
                                     </select>
                                     &nbsp;*</span><span id="rec_nameTip"></span></li>  
-                      </ul>
-                </div>
+                      </ul-->
+                     </div>
                 <div class="mt_padding">
                    
                     
                 </div>
 
                 <div class="mt_padding" id="goods">
-                    <div class="title" style="float: left">Serivce List</div>
+                    <div class="title" style="float: left">Service List</div>
                     <div style="float: left; color: #F00; margin-left: 10px" class="title" id="itemlist"></div>
                     <!--<div class="title" style="float: right"><a href="##">返回修改购物车</a></div>-->
                     <div class="content">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ececec">
                             <tr>
 
-                                <td width="295" height="25" align="center" valign="middle">service infromation</td>
+                                <td width="295" height="25" align="center" valign="middle">Service Information</td>
                                 <td width="110" align="center" valign="middle"><p>price</p></td>
-                                <td width="100" align="center" valign="middle" class="gwc_color">wollongong</td>
-                                <td width="100" align="center" valign="middle">amount</td>
-                                <td width="120" align="center" valign="middle">subtotal</td>
+                                <td width="100" align="center" valign="middle" class="gwc_color">Name</td>
+                                <td width="100" align="center" valign="middle">Amount</td>
+                                <td width="120" align="center" valign="middle">Subtotal</td>
+
+                            </tr>
+                            <tr th:each="item : ${shoppingCart}" bgcolor="#fcfcfc">
+
+                                <td align="center" valign="middle">
+                                    <span class="tp01"><img th:src="${item.key.img}" width="60" height="60" /></span>
+                                    
+                                </td>
+                                <td align="center" valign="middle"><span th:utext="${item.key.currentPrice}"/></td>
+                                <td align="center" valign="middle"><span th:utext="${item.key.name}"/></td>
+                                <td align="center" valign="middle"><span th:utext="${item.value}"/></td>
+                                <td align="center" valign="middle"><span th:utext="${item.key.currentPrice} * ${item.value}"/></td>
 
                             </tr>
                         </table>
 
                         <input id="cartids" name="cartids" type="hidden" value="246,236,211,245" />
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <!--table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr id="tr246">
                                 <td width="90" height="82" align="left" valign="middle"><span class="tp01">
                                     <img src="images/1416400315.jpg" width="60" height="60" /></span></td>
@@ -615,20 +611,22 @@
                           
                            
                            
-                        </table>
+                        </table-->
                     </div>
                 </div>
                 <div class="onsubmit">
-                    submit order total price:<span>135<span id="total">.00</span>
+                    submit order total price:<span><span id="total" th:utext="${total}"></span>
                     <input id="intotal" name="totalprice" type="hidden" value="5227.00" /><input id="inyunfei" name="yunfei" type="hidden" value="0" />
-                    </span>（include delivery fee<span id="yunfei">0.00</span>）  <a href="orderover.html" style="vertical-align: middle">
-                                      <img src="images/btn-submit.jpg"  border="0" /></a>
+                    </span>（include delivery fee<span id="yunfei">0.00</span>）  
+                    <br/>
+                    <input id="submitbtn" type="image" src="images/btn-submit.jpg" />
                 </div>
 
  
  
 
 
+            </div>
             </div>
         </form>
         <div style="clear: both"></div>
@@ -707,17 +705,18 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
+</div>
 </div>
 </body>
 </html>
