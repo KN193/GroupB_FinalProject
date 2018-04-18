@@ -8,7 +8,8 @@ public enum Nationality {
 	French("French", "France"),
 	Vietnam("Vietnam", "Vietnam"),
 	SaudiArabia("Saudi Arabia", "Saudi Arabia"),
-	Indian("Indian", "India");
+	Indian("Indian", "India"),
+	Singapore("Singapore", "Singapore");
 	
 	private String name;
 	private String countryName;

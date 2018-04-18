@@ -7,6 +7,7 @@
     <meta name="keywords" content="wollongong service exchange " />
     <meta name="description" content="wollongong service exchange" />
     <link rel="stylesheet" type="text/css" href="css/StyleSheet.css" />
+    <link rel="stylesheet" type="text/css" href="css/messageBlock.css" />
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/jkmegamenu.js"></script>
@@ -375,30 +376,32 @@
             </div>
             <div class="c_right">
                 <div class="c_rBox">
-                    <div class="remBox">
-                        <div class="eBox" th:each="message : ${messages}">
-                            <div class="eBox_txt">
-                                <div class="eBox_title">
-                                    <h3>User:</h3>
-                                    <a th:href="@{/member_gbook_detail(userName=${message.sender.email})}"><font th:utext="${message.sender.email}"></font></a>
-                                    <b th:utext="${message.content}"> </b>
-                                </div>
+                    <div class="remBox" style="width: 900px; height: 700px; overflow: auto;">
+                        <div class="eBox" th:each="message : ${messages}" th:switch="${message.sender.email}">
+                            <div class="eBox_txt" th:case="${crrUser}">
+                                <msg class="left">
+                                    <h3><font th:utext="${message.sender.email}"></font></h3>
+                                    <span th:utext="${message.content}"> </span>
+                                </msg>
+                                <div class="clear"></div>
                             </div>
-                        </div>
+                            <div class="eBox_txt" th:case="*">
+                                <msg class="right">
+                                    <h3><font th:utext="${message.sender.email}"></font></h3>
+                                    <span th:utext="${message.content}"> </span>
+                                </msg>
+                                <div class="clear"></div>
+                            </div>
                         <div class="eBox_more">
-                            total <span style="color:#feae23;" th:utext="${messages.size()}"></span> records
-                        </div>
-                        <div>
-                        <form th:action="@{/member_gbook_detail}" method="get" >
-                            Send message to a user: 
-                            <select id="user" name="userName">
-								<option th:each="user : ${userSet}" th:value="${user.email}" th:text="${user.lastName}"></option>
-							</select>
-							<input type="submit" value="Send Message"/>
-						</form>
+                            <span style="color:#feae23;" th:utext="${message.sendTime}"></span> 
                         </div>
                     </div>
                 </div>
+                <form th:action="@{/insertMsg}" method="post">
+                     <textarea name="reply" class="msg_input" style="width: 800px; height: 60px; overflow: auto; float:left; margin-left:10px;" id="content"></textarea>
+                     <input name="sender" type="hidden" th:value="${sender}"/>
+                     <input value="Reply" type="submit" class="pbtn1"/>
+                </form>
             </div>
         </div>
         <div class="clear"></div>
@@ -495,6 +498,7 @@
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
+    </div>
     </div>
     </div>
 </body>

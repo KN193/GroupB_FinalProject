@@ -391,37 +391,57 @@
     
      
 </div> 
-            <span class="msgtitle">Nationality:</span>
-            <select id="nation" name="nation">
+<table border="0" cellpadding="0" cellspacing="0" class="table7">
+	<tr>
+       <th><span class="msgtitle">Nationality:</span></th>
+       <td>
+       <select id="nation" name="nation" style="margin-left:10px;margin-top:7px">
  			<option th:each="nationsing : ${nationsSet}" th:value="${nationsing}" th:text="${nationsing.name}"></option>
 			</select>
-			<br/>
-			<span class="msgtitle">Service Type:</span>
-             <select id="type" name="type">
+       </td>
+    </tr>
+    <tr>
+       <th><span class="msgtitle">Service Type:</span></th>
+       <td>
+       <select id="type" name="type" style="margin-left:10px;margin-top:7px">
 											<option>General service</option>
 											<option>Book</option>
 											<option>Tutorial</option>
 											<option>others</option>
 									</select>
-			<br/>
-             <span class="msgtitle">Service quantity:&nbsp;
-             <input id="Text1" type="text" name="quantity"  style="width:40PX"/></span>
-            <span class="msgtitle">Current price:&nbsp;
-             <input id="Text1" type="text" name="crrPrice"  style="width:40PX"/></span>
-             <span class="msgtitle">Original price:&nbsp;
-             <input id="Text1" type="text" name="oriPrice"  style="width:40PX"/></span>
-            <span class="msgtitle">please write your service title:</span> 
-            
-            <textarea name="title" class="msg_input" style="width: 800px; height: 60px; overflow: auto; float:left; margin-left:10px;" id="content"></textarea>
-            <div class="blank10">&nbsp;</div>
-             <span class="msgtitle">please write your service description:</span>
-            <textarea name="description" class="msg_input" style="width: 800px; height: 60px; overflow: auto; float:left; margin-left:10px;" id="content"></textarea>
-            <span class="msgtitle"></span>
-            <div class="blank10">&nbsp;</div>
-             
-           
-           <div class="hr_10"></div>
-           
+       </td>
+    </tr>
+    <tr>
+       <th><span class="msgtitle">Service quantity:&nbsp;</span></th>
+       <td>
+       <input id="Text1" type="text" name="quantity"  style="height: 20px;width:40PX; float:left; margin-left:10px;margin-top:5px"/>
+       </td>
+    </tr>
+    <tr>
+       <th><span class="msgtitle">Current price:&nbsp;</span></th>
+       <td>
+       <input id="Text1" type="text" name="crrPrice"  style="height: 20px;width:40PX; float:left; margin-left:10px;margin-top:5px"/>
+       </td>
+    </tr>                    
+    <tr>
+       <th><span class="msgtitle">Original price:&nbsp;</span></th>
+       <td>
+       <input id="Text1" type="text" name="oriPrice"  style="height: 20px;width:40PX; float:middle; margin-left:10px;margin-top:5px"/>
+       </td>
+    </tr>                   
+    <tr>
+       <th style="height: 50px"><span class="msgtitle">please write your service title:</span></th>
+       <td style="width: 560px; height: 60px">
+       <textarea name="title" class="msg_input" style="width: 800px; height: 40px; overflow: auto; float:left; margin-left:10px;" id="content"></textarea>
+       </td>
+    </tr>  
+    <tr>
+       <th style="height: 50px"><span class="msgtitle">please write your service description:</span></th>
+       <td style="width: 560px; height: 60px">
+       <textarea name="description" class="msg_input" style="width: 800px; height: 40px; overflow: auto; float:left; margin-left:10px;" id="content"></textarea>
+       </td>
+    </tr>
+</table>
              <span class="msgtitle">please upload your service picture:</span>
              <input type="file" name="photo" id="photo" />
                                 <img id="previewImg" width="265" height="265" />

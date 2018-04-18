@@ -3,6 +3,7 @@ package uow.finalproject.webapp.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.sql.DataSource;
@@ -281,5 +282,39 @@ public class UserDAO {
 			return 2; // other internal error
 		}
 		return 0; // successfully
+	}
+
+	public ArrayList<User> findAllUser() {
+		Connection conn = null;
+		String sql = "SELECT * FROM User;";
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String nickname = rs.getString("nickname");
+				String firstname = rs.getString("firstname");
+				String lastname = rs.getString("lastname");
+				String photo = rs.getString("photo");
+				String mobile = rs.getString("mobile");
+//				Nationality nation = Nationality.values()[rs.getString("nationality"];
+				Nationality nation = Nationality.valueOf(rs.getString("nationality").replaceAll(" ", "")); // hack to remove space for enum recognition (Saudi Arabia => SaudiArabia)
+				String email = rs.getString("userName");
+				Date dob = rs.getTimestamp("DateOfBirth");
+				
+				User user = new User(nickname,firstname,lastname,email,nation);
+				user.setPhoto(photo);
+				user.setDOB(dob);
+				user.setMobile(mobile);
+				users.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null; // other internal error
+		}
+		
+		return users;
 	}
 }
