@@ -46,9 +46,9 @@
                     <div class="m_top_con_right">
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
-                                <li><a href="member_order.html">my order</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
+                                                            <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
                         </div>

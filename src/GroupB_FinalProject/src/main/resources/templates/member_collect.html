@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -48,11 +48,10 @@
                        Hi,welcome to wollonging service exchanges web !
                     </div>
                     <div class="m_top_con_right">
-                        <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
                                  <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
@@ -384,16 +383,17 @@
                                     <td style="width:180px;  font-weight:bold;">price</td>
                                     <td style="width:280px;  font-weight:bold;">operate</td>
                                 </tr>
-                                <tr>
+                                <tr th:each="service : ${services}">
                                     <td style="width:370px; font-weight:normal;">
-                                        <img src="images/colle.jpg" class="Cimg" />
-                                        <span style="width:168px; height:auto; float:left; margin-left:30px; margin-top:10px;">
-2017 fank handmade mooncake
+                                        <img th:src="${service.img}" class="Cimg" />
+                                        <span style="width:168px; height:auto; float:left; margin-left:30px; margin-top:10px;" th:utext="${service.name}">
+
                                         </span>
                                     </td>
-                                    <td style="width:180px;  font-weight:normal;"><span style="color:#c41921;">9.80
+                                    <td style="width:180px;  font-weight:normal;"><span style="color:#c41921;" th:utext="${service.currentPrice}">
 </span></td>
-                                    <td style="width:280px;  font-weight:normal;"><span style="color:#c41921;"><input id="Button2" type="button" value="check" class="pbtn1" />|<input id="Button3" type="button" value="delete"  class="pbtn1"/></span></td>
+                                    <td style="width:280px;  font-weight:normal;"><span style="color:#c41921;">
+                                    <a th:href="@{prod_show(serviceID=${service.serviceID})}"><input id="Button2" type="button" value="check" class="pbtn1" /></a> | <a th:href="@{deleteFav(serviceID=${service.serviceID})}" onclick="return confirm('Delete this service from your favourite?');"><input id="Button3" type="button" value="delete"  class="pbtn1"/></a></span></td>
                                 </tr>
                             </table>
                         </div>
@@ -482,17 +482,18 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>
             <div class="blank20">&nbsp;</div>
         </div>
+    </div>
     </div>
 </body>
 </html>

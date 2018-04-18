@@ -1,6 +1,9 @@
 package uow.finalproject.webapp.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +16,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import uow.finalproject.webapp.dao.CommentDAO;
+import uow.finalproject.webapp.dao.FavoriteDAO;
 import uow.finalproject.webapp.dao.ServiceDAO;
 import uow.finalproject.webapp.dao.UserDAO;
 import uow.finalproject.webapp.entity.Comment;
 import uow.finalproject.webapp.entity.Service;
 import uow.finalproject.webapp.entity.User;
+import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.utility.PasswordGenerator;
 
 @Controller
@@ -32,6 +38,9 @@ public class ServiceController {
 	
 	@Autowired
 	UserDAO userDAO;
+	
+	@Autowired
+	FavoriteDAO favoriteDAO;
 	
 	@Autowired
 	ServiceDAO serviceDAO;
@@ -351,6 +360,80 @@ public class ServiceController {
     		usr.getShoppingCart().clear();
 		return modelAndView;
     }
+	
+	@RequestMapping(value="/member_add_service", method=RequestMethod.GET)
+    public ModelAndView member_add_service() {
+    		ModelAndView modelAndView = initializeLoggedUser("member_add_service");
+    		initializeNationalityList(modelAndView);
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/insertNewService", method=RequestMethod.POST)
+    public ModelAndView insertNewService(@RequestParam(value="type", required=true) String type
+			,@RequestParam(value="nation", required=true) Nationality nation
+			,@RequestParam(value="title", required=true) String title
+			,@RequestParam(value="quantity", required=true) int quantity
+			,@RequestParam(value="crrPrice", required=true) float crrPrice
+			,@RequestParam(value="oriPrice", required=true) float oriPrice
+			,@RequestParam(value="description", required=true) String description
+			,@RequestParam(value="photo", required=false) MultipartFile photo) {
+    		String imgPath = savePhoto(photo, usr.getEmail());
+		Service srv = new Service(0, usr.getEmail(), title, crrPrice, oriPrice, description, quantity, 0, new java.util.Date(), nation.getName(), 0, type, imgPath);
+		serviceDAO.insertNewService(srv, usr);
+		return prod_list(0);
+    }
+	
+	@RequestMapping(value="/member_collect", method=RequestMethod.GET)
+    public ModelAndView member_collect() {
+    		ModelAndView modelAndView = initializeLoggedUser("member_collect");
+    		initializeNationalityList(modelAndView);
+    		ArrayList<Service> services = favoriteDAO.findFavoriteByUser(usr.getEmail());
+    		
+    		modelAndView.addObject("services", services);
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/deleteFav", method=RequestMethod.GET)
+    public ModelAndView deleteFav(@RequestParam(value="serviceID", required=true) int serviceID) {
+    		ModelAndView modelAndView = initializeLoggedUser("member_collect");
+    		initializeNationalityList(modelAndView);
+    		int result = favoriteDAO.deleteFavoriteByUser(usr.getEmail(), serviceID);
+    		ArrayList<Service> services = favoriteDAO.findFavoriteByUser(usr.getEmail());
+
+    		modelAndView.addObject("services", services);
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+		return modelAndView;
+    }
+	
+	@RequestMapping(value="/insertFav", method=RequestMethod.GET)
+    public ModelAndView insertFav(@RequestParam(value="serviceID", required=true) int serviceID) {
+    		ModelAndView modelAndView = initializeLoggedUser("member_collect");
+    		initializeNationalityList(modelAndView);
+    		int result = favoriteDAO.insertFavoriteByUser(usr.getEmail(), serviceID);
+    		ArrayList<Service> services = favoriteDAO.findFavoriteByUser(usr.getEmail());
+
+    		modelAndView.addObject("services", services);
+    		
+    		if (usr == null) {
+    			return modelAndView;
+    		}
+    		
+		return modelAndView;
+    }
 
     private ModelAndView initializeLoggedUser(String viewName) {
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -378,5 +461,30 @@ public class ServiceController {
 	    		total += pair.getKey().getCurrentPrice() * pair.getValue();
 	    }
 		return total;
+	}
+    
+    private ModelAndView initializeNationalityList(ModelAndView modelAndView) {
+		List<Nationality> nationsSet = new ArrayList<Nationality>(EnumSet.allOf(Nationality.class));
+		modelAndView.addObject("nationsSet", nationsSet);
+		return modelAndView;
+    }
+    
+    private String savePhoto(MultipartFile photo, String usrName) {
+    	// Handling photo upload
+		String dbPath = null;
+		String fullPath = null;
+		try {
+			dbPath = "images/"+usrName+passwordGenerator.generateNewPassword()+".jpg";
+			fullPath = "src/main/resources/static/" + dbPath;
+			String fileTo = new File(fullPath).getAbsolutePath();
+		photo.transferTo(new File(fileTo));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dbPath;
 	}
 }

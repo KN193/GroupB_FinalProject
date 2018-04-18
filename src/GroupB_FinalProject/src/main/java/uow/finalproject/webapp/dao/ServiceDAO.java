@@ -234,6 +234,48 @@ public class ServiceDAO {
 	        
 	    }
 		ps.executeBatch();
+		
+		// deduce repository
+		sql = "UPDATE Service SET capacity = capacity - ? WHERE serviceID=?;";
+		ps = conn.prepareStatement(sql);
+		it = usr.getShoppingCart().entrySet().iterator();
+	    while (it.hasNext()) {
+	    		Map.Entry<Service, Integer> pair = (Map.Entry<Service, Integer>)it.next();
+			ps.setInt(1, pair.getValue());
+			ps.setInt(2, pair.getKey().getServiceID());
+			
+	        ps.addBatch();
+	    }
+	    ps.executeBatch();
+
+		ps.close();
+		conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}
+		return 0;
+	}
+	
+	public int insertNewService(Service srv, User usr) {
+		Connection conn = null;
+		String sql = "INSERT INTO Service(provider, name, currentPrice, originalPrice, description,capacity, RegisterTime, nationality, type, image,rank) VALUES(?,?,?,?,?,?,?,?,?,?,?);";
+		try {
+		conn = dataSource.getConnection();
+		PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usr.getEmail());
+			ps.setString(2, srv.getName());
+			ps.setFloat(3, srv.getCurrentPrice());
+			ps.setFloat(4, srv.getOriginalPrice());
+			ps.setString(5, srv.getDescription());
+			ps.setInt(6, srv.getCapacity());
+			ps.setDate(7, new java.sql.Date(srv.getRegisterDate().getTime()));
+			ps.setString(8, srv.getNationality());
+			ps.setString(9, srv.getType());
+			ps.setString(10, srv.getImg());
+			ps.setInt(11, srv.getCapacity());
+		ps.execute();
+		
 		ps.close();
 		conn.close();
 		} catch (Exception e) {

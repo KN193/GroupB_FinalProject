@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
@@ -50,12 +50,11 @@
                        Hi,welcome to wollonging service exchanges web !
                     </div>
                     <div class="m_top_con_right">
-                        <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
-                                 <li><a href="member_center.html">member center</a></li>
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
+                                <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
                         </div>
@@ -380,29 +379,37 @@
                     <div class="cTab">
                          <div class="subCont">
 
-        <form name="form" id="form" method="post" action="member.html">
+        <form name="form" id="form" method="post" enctype="multipart/form-data" th:action="@{/insertNewService}">
             
             <div class="hr_10"></div>
             
-            <div class="info">
 	<div>
-	<select id="s_province" name="s_province"></select>  
-    
-    <select id="s_city" name="s_city" ></select>  
-    
-    <select id="s_county" name="s_county"></select>
-   <frank style="color:#ff3300;">(required)</frank>
+	
     <script class="resources library" src="js/area.js" type="text/javascript"></script>
    
     <script type="text/javascript">_init_area();</script>
     
      
 </div> 
-            
-             <span class="msgtitle"></span>
+            <span class="msgtitle">Nationality:</span>
+            <select id="nation" name="nation">
+ 			<option th:each="nationsing : ${nationsSet}" th:value="${nationsing}" th:text="${nationsing.name}"></option>
+			</select>
+			<br/>
+			<span class="msgtitle">Service Type:</span>
+             <select id="type" name="type">
+											<option>General service</option>
+											<option>Book</option>
+											<option>Tutorial</option>
+											<option>others</option>
+									</select>
+			<br/>
              <span class="msgtitle">Service quantity:&nbsp;
-             <input id="Text1" width="80px"  type="text"  STYLE="WIDTH:40PX";/></span>
-            
+             <input id="Text1" type="text" name="quantity"  style="width:40PX"/></span>
+            <span class="msgtitle">Current price:&nbsp;
+             <input id="Text1" type="text" name="crrPrice"  style="width:40PX"/></span>
+             <span class="msgtitle">Original price:&nbsp;
+             <input id="Text1" type="text" name="oriPrice"  style="width:40PX"/></span>
             <span class="msgtitle">please write your service title:</span> 
             
             <textarea name="title" class="msg_input" style="width: 800px; height: 60px; overflow: auto; float:left; margin-left:10px;" id="content"></textarea>
@@ -414,32 +421,27 @@
              
            
            <div class="hr_10"></div>
-           <div class="jqzoom" id="spec-n1" onclick="window.open('http://')">
-                                <img height="450"
-                                    src="images/sww.jpg" jqimg="images/sww.jpg" width="450">
-                            </div>
-                            <div class="jqzoom" id="spec-n1" onclick="window.open('http://')">
-                                <img height="450"
-                                    src="images/sww.jpg" jqimg="images/sww.jpg" width="450">
-                            </div>
-                            <div class="jqzoom" id="spec-n1" onclick="window.open('http://')">
-                                <img height="450"
-                                    src="images/sww.jpg" jqimg="images/sww.jpg" width="450">
-                            </div>
-                            <div class="jqzoom" id="spec-n1" onclick="window.open('http://')">
-                                <img height="450"
-                                    src="images/sww.jpg" jqimg="images/sww.jpg" width="450">
-                            </div>
            
-             <span class="msgtitle">please upload your service picture!</span>
+             <span class="msgtitle">please upload your service picture:</span>
+             <input type="file" name="photo" id="photo" />
+                                <img id="previewImg" width="265" height="265" />
+                                <script type="text/javascript">
+                                var reader = new FileReader();
+								reader.onload = function(r_event) {
+								  document.getElementById('previewImg').setAttribute('src', r_event.target.result);
+								}
+								
+								document.getElementsByName('photo')[0].addEventListener('change', function(event) {
+								    reader.readAsDataURL(this.files[0]);
+								});
+								</script>
              <div class="blank10">&nbsp;</div>
-             <a href="comment_successfully.html">
-                                    <img src="images/ok1.jpg" width="149" height="42" border="0" /></a>
+                                    <input type="image" src="images/ok1.jpg" width="149" height="42" border="0" />
         </form>
+        </div>
 
 
     </div>
-</body>
                       
                       
                        
@@ -530,12 +532,12 @@
             <div class="bot">
                 <div class="bot_link">
                        |<a href="service_show.html" target="_blank">service and support</a>
-                       |<a href="service_show.html" target="_blank">delivery & payment</a>
+                       |<a href="service_show.html" target="_blank">delivery &amp; payment</a>
                         |<a href="service_show.html" target="_blank">after sale service</a>
                 </div>
 
                 <div class="bot_wz">
-                    Copyright  2017 All Rights Reserved<br>
+                    Copyright  2017 All Rights Reserved<br/>
                     
                 </div>
             </div>

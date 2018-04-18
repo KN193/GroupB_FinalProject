@@ -49,10 +49,9 @@
                         <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
-                                <li><a href="index_login.html">log in</a></li>
-                                <li><a href="register.html">register</a></li>
-                                <li><a href="member_center.html">member center</a></li>
-                                
+                                <li>Welcome <span th:utext="${userName}"></span></li>
+                            		<li><a href="logout" onclick="return confirm('Logout from your account?');">logout</a></li>
+                                                            <li><a href="member_center.html">member center</a></li>
                                 <li style="background: none;"><a href="service.html">service center</a></li>
                             </ul>
                         </div>
@@ -393,12 +392,12 @@
 
                     <div class="gwc_b3">
                         <span class="gwc_l1">&nbsp;
-                            <input name="action" value="delete selected services" type="image" src=""/>
+                            <input name="action" value="delete selected services" type="button" class="pbtn1"  src=""/>
                             &nbsp;&nbsp;<a href="@{/clearShoppingCart}">clear shopping cart</a></span>
                         <span class="gwc_wzl"><span id="totalnum" class="color13"><span th:utext="${shoppingCart.size()}"/></span>&nbsp;services
                                &nbsp;&nbsp;total price：<span class="color06"><span id="totalgoodsprice"><span th:utext="${total}"/></span></span><br />
                             <strong>total price</strong>(exclude delivery fee):<strong class="color13"><span id='totalprice' th:utext="${total}">
-                            </span></strong></span><span class="gwc_an"><a th:href="/member_index"><img src="images/gwc_11.jpg" class="gwc1" /></a>
+                            </span></strong></span><span class="gwc_an"><a th:href="@{/member_index}"><img src="images/gwc_11.jpg" class="gwc1" /></a>
                             <input name="action" type="image" value="payShoppingCart" id="jiesuan" src="images/gwc_12.jpg" class="gwc2" /></span>
                     </div>
                 </form>

@@ -50,7 +50,6 @@
                        Hi,welcome to wollonging service exchanges web !
                     </div>
                     <div class="m_top_con_right">
-                        <img src="images/tel.jpg" />
                         <div class="m_top_menu">
                             <ul>
                                 <li>Welcome <span th:utext="${userName}"></span></li>
@@ -441,8 +440,8 @@
                             </div>
                             <div class="clear"></div>
                             <div class="pleft" style="float: left; margin-top: 12px;">sales volume:</div>
-                            <div class="pleft1" style="float: left; margin-top: 12px;">
-                                200
+                            <div class="pleft1" style="float: left; margin-top: 12px;" th:text="${service.capacity}">
+                                
                             </div>
                             <div class="clear"></div>
                             <div class="clear"></div>
@@ -470,7 +469,7 @@
                                 <input type="button" value="" class="btn4" name="goods_add" onclick="javascript: mount_add();" />
                             </div>
                             <input type="hidden" id="serviceID" name="serviceID" th:value="${service.serviceID}"/>
-                            <div class="pleft" style="float: left; margin-top: 10px; padding-left: 12px;">there are 99 in repository</div>
+                            <div class="pleft" style="float: left; margin-top: 10px; padding-left: 12px;">there are <span th:utext="${service.capacity}"></span> in repository</div>
                             <div class="clear"></div>
                             <div class="pbtn">
                                  <input name="action" value="buyOne" type="image" src="images/buy2.jpg"  />
@@ -479,7 +478,7 @@
                                    <input name="action" value="cart" type="image" src="images/btn2.jpg"  />
                             </div>
                             <div class="pbtn">
-                                <a href="member_collect.html">
+                                <a th:href="@{/insertFav(serviceID=${service.serviceID})}">
                                     <img src="images/btn4.jpg" width="149" height="42" border="0" id="Button3" /></a>
                             </div><div class="pbtn">
                                 <a href="prod_list.html">
