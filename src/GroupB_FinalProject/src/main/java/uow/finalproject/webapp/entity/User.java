@@ -3,12 +3,19 @@ package uow.finalproject.webapp.entity;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Indexed;
+
 import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.entityType.Suburb;
+
 
 public class User {
 	// Mandatory fields
 	String nickName, firstName, lastName;
+
 	String email;
 	String pwd;
 	String link;

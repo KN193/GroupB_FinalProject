@@ -53,7 +53,7 @@ public class ServiceDAO {
 				String img = rs.getString("image");
 //				Nationality nation = Nationality.valueOf(rs.getString("nationality"));
 				Date registerDate = rs.getTimestamp("RegisterTime");
-				Service service = new Service(serviceID, provider, name, crrPrice, oriPrice, description, capacity, deal, registerDate, nation, rank, type, img);
+				Service service = new Service(serviceID, provider, name, crrPrice, (int)oriPrice, description, capacity, deal, registerDate, nation, rank, type, img);
 				services.add(service);
 			}
 			ps.close();
@@ -130,7 +130,7 @@ public class ServiceDAO {
 				String img = rs.getString("image");
 //				Nationality nation = Nationality.valueOf(rs.getString("nationality"));
 				Date registerDate = rs.getTimestamp("RegisterTime");
-				Service service = new Service(serviceID, provider, name, crrPrice, oriPrice, description, capacity, deal, registerDate, nation, rank, type, img);
+				Service service = new Service(serviceID, provider, name, crrPrice, (int)oriPrice, description, capacity, deal, registerDate, nation, rank, type, img);
 				services.add(service);
 			}
 			ps.close();
@@ -157,7 +157,7 @@ public class ServiceDAO {
 				String provider = rs.getString("provider");
 				String name = rs.getString("name");
 				float crrPrice = rs.getFloat("currentPrice");
-				float oriPrice = rs.getFloat("originalPrice");
+				int oriPrice = rs.getInt("originalPrice");
 				String description = rs.getString("description");
 				int capacity = rs.getInt("capacity");
 				int deal = rs.getInt("number_of_deal");
@@ -265,8 +265,10 @@ public class ServiceDAO {
 		PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, usr.getEmail());
 			ps.setString(2, srv.getName());
-			ps.setFloat(3, srv.getCurrentPrice());
-			ps.setFloat(4, srv.getOriginalPrice());
+			//ps.setFloat(3, srv.getCurrentPrice());
+			//ps.setDouble(3, srv.getCurrentPrice());
+			//ps.setFloat(4, srv.getOriginalPrice());
+			ps.setDouble(4, srv.getOriginalPrice());
 			ps.setString(5, srv.getDescription());
 			ps.setInt(6, srv.getCapacity());
 			ps.setDate(7, new java.sql.Date(srv.getRegisterDate().getTime()));

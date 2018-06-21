@@ -22,3 +22,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+indexpath/
+uow.finalproject.webapp.entity.Persons/

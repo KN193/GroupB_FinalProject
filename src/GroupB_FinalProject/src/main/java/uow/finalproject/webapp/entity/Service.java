@@ -1,37 +1,71 @@
 package uow.finalproject.webapp.entity;
 
+
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.NumericField;
+
+@Entity(name="Service")
+@Indexed
 public class Service implements Comparable<Service>{
 	// Mandatory fields
+	@Id
 	int serviceID;
+	
 	String provider;
+	
+	@Field
 	String name;
-	float currentPrice, originalPrice;
+
+	double Currentprice;
+
+	double Originalprice;
+	
+	@Field
 	String description;
+
 	int capacity;
-	int deal;
-	Date registerDate;
+	
+	@Column(name="number_of_deal")
+	int Deal;
+	
+	Date Registertime;
+	
+	@Column(name="image")
 	String img;
 
-//	Nationality nationality;
 	String nationality;
+	
+	@Column(name="rank")
 	int rank;
+	
 	String type;
 	
-	public Service(int serviceID, String provider, String name, float currentPrice, float originalPrice, String description,
+	public Service() {}
+	
+	public Service(int serviceID, String provider, String name, double currentPrice, double originalPrice, String description,
 			int capacity, int deal, Date registerDate, String nationality, int rank, String type, String img) {
 		super();
 		this.serviceID = serviceID;
 		this.provider = provider;
 		this.name = name;
-		this.currentPrice = currentPrice;
-		this.originalPrice = originalPrice;
+		this.Currentprice = currentPrice;
+		this.Originalprice = originalPrice;
 		this.description = description;
 		this.capacity = capacity;
-		this.deal = deal;
-		this.registerDate = registerDate;
+		this.Deal = deal;
+		this.Registertime = registerDate;
 		this.nationality = nationality;
 		this.rank = rank;
 		this.type = type;
@@ -55,17 +89,19 @@ public class Service implements Comparable<Service>{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public float getCurrentPrice() {
-		return currentPrice;
+	
+	public double getCurrentPrice() {
+		return Currentprice;
 	}
-	public void setCurrentPrice(float currentPrice) {
-		this.currentPrice = currentPrice;
+	public void setCurrentPrice(double currentPrice) {
+		this.Currentprice = currentPrice;
 	}
-	public float getOriginalPrice() {
-		return originalPrice;
+	
+	public double getOriginalPrice() {
+		return Originalprice;
 	}
-	public void setOriginalPrice(float originalPrice) {
-		this.originalPrice = originalPrice;
+	public void setOriginalPrice(double originalPrice) {
+		this.Originalprice = originalPrice;
 	}
 	public String getDescription() {
 		return description;
@@ -80,16 +116,16 @@ public class Service implements Comparable<Service>{
 		this.capacity = capacity;
 	}
 	public int getDeal() {
-		return deal;
+		return Deal;
 	}
 	public void setDeal(int deal) {
-		this.deal = deal;
+		this.Deal = deal;
 	}
 	public Date getRegisterDate() {
-		return registerDate;
+		return Registertime;
 	}
 	public void setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate;
+		this.Registertime = registerDate;
 	}
 	public String getNationality() {
 		return nationality;
@@ -97,7 +133,7 @@ public class Service implements Comparable<Service>{
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-	public int getRank() {
+	public int getrRank() {
 		return rank;
 	}
 	public void setRank(int rank) {

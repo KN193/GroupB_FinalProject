@@ -74,11 +74,11 @@
                     </div>
                     <div class="ss">
                         <div class="ss_top">
-                            <input type="text" value="input key words" onfocus="this.value=''" onblur="if(this.value==''){this.value='input key words'}" class="inp1" />
-                            
-                            
-                            
-                            <input id="Button1" type="button" value="search" class="inp2" />
+                            <form action="/searchtest" th:action="@{/searchtest}" th:object="${search}">
+    						<!-- <label for="search_input">Search:</label>--> 
+    						<input type="text" name ="search" id="search" value="input key words" onfocus="this.value=''" onblur="if(this.value==''){this.value='input key words'}" class="inp1" />
+                            <input id="Button1" type="submit" value="search" class="inp2" />
+    					</form>
                         </div>
                                            </div>
                     <div class="hd_gwc">

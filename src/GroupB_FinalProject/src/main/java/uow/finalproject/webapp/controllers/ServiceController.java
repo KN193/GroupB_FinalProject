@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,10 +25,12 @@ import uow.finalproject.webapp.dao.FavoriteDAO;
 import uow.finalproject.webapp.dao.ServiceDAO;
 import uow.finalproject.webapp.dao.UserDAO;
 import uow.finalproject.webapp.entity.Comment;
+import uow.finalproject.webapp.entity.Persons;
 import uow.finalproject.webapp.entity.Service;
 import uow.finalproject.webapp.entity.User;
 import uow.finalproject.webapp.entityType.Nationality;
 import uow.finalproject.webapp.utility.PasswordGenerator;
+import uow.finalproject.webapp.utility.SearchService;
 
 @Controller
 public class ServiceController {
@@ -50,6 +53,9 @@ public class ServiceController {
 	
 	@Autowired
 	PasswordGenerator passwordGenerator;
+	
+	@Autowired
+	SearchService searchService;
     
     @RequestMapping(value="/new_service", method=RequestMethod.GET)
     public ModelAndView new_service(@RequestParam(value="crrPage", required=false) Integer crrPage) {
@@ -458,7 +464,7 @@ public class ServiceController {
     		Iterator<Entry<Service, Integer>> it = usr.getShoppingCart().entrySet().iterator();
     		while (it.hasNext()) {
 	    		Map.Entry<Service, Integer> pair = (Map.Entry<Service, Integer>)it.next();
-	    		total += pair.getKey().getCurrentPrice() * pair.getValue();
+	    		//total += pair.getKey().getCurrentPrice() * pair.getValue();
 	    }
 		return total;
 	}
@@ -487,4 +493,24 @@ public class ServiceController {
 		}
 		return dbPath;
 	}
+    
+    @RequestMapping(value = "/searchtest", method = RequestMethod.GET)
+    public String search(@RequestParam(value = "search", required = false) String q, Model model) {
+    
+    List<Service> searchResults = null;
+    try {
+    	System.out.println("Search term is " + q);
+        searchResults = searchService.fuzzySearch(q);
+        System.out.println(searchResults.size());
+    } catch (Exception ex) {
+        // here you should handle unexpected errors
+        // ...
+        // throw ex;
+    	System.out.println(ex.getMessage());
+    }
+    model.addAttribute("search", searchResults);
+    return "searchresultstest";
+
 }
+    }
+

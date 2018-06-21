@@ -7,7 +7,7 @@ public enum Nationality {
 	Chinese("Chinese", "China"),
 	French("French", "France"),
 	Vietnam("Vietnam", "Vietnam"),
-	SaudiArabia("Saudi Arabia", "Saudi Arabia"),
+	Pakistan("Pakistan", "Pakistan"),
 	Indian("Indian", "India"),
 	Singapore("Singapore", "Singapore");
 	

@@ -10,6 +10,13 @@ public class WebController {
 		return "index";
 	}
 	
+	/*
+	@RequestMapping(value= {"/searchresultstest"})
+	public String search_test() {
+		return "searchresultstest";
+	}
+	*/
+	
 	@RequestMapping(value= {"/index_login"})
 	public String index_login() {
 		return "index_login";
@@ -34,4 +41,6 @@ public class WebController {
 	public String member_index() {
 		return "member_index";
 	}
+	
+	
 }
